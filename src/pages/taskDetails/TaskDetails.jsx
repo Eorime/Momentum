@@ -1,7 +1,8 @@
 import React from "react";
+import { Container } from "./styles";
 
 const TaskDetails = () => {
-	return <div>TaskDetails</div>;
+	return <Container>sofast</Container>;
 };
 
 export default TaskDetails;

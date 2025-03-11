@@ -1,7 +1,7 @@
 import React from "react";
 
 const CreateTask = () => {
-	return <div>CreateTask</div>;
+	return <div>Create task</div>;
 };
 
 export default CreateTask;

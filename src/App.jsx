@@ -1,7 +1,11 @@
-import { useState } from "react";
+import AppRoutes from "./AppRoutes";
 
 function App() {
-	return <div>hii</div>;
+	return (
+		<div className="App">
+			<AppRoutes />
+		</div>
+	);
 }
 
 export default App;
