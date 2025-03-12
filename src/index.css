@@ -1,0 +1,29 @@
+@font-face {
+	font-family: "Firago";
+	src: url("./assets/fonts/FiraGO-Regular.otf") format("opentype"),
+		url("./assets/fonts/FiraGO-Regular.ttf") format("truetype");
+	font-weight: 400;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: "Firago";
+	src: url("./assets/fonts/FiraGO-Medium.otf") format("opentype"),
+		url("./assets/fonts/FiraGO-Medium.ttf") format("truetype");
+	font-weight: 500;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: "Firago";
+	src: url("./assets/fonts/FiraGO-SemiBold.otf") format("opentype"),
+		url("./assets/fonts/FiraGO-SemiBold.ttf") format("truetype");
+	font-weight: 600;
+	font-style: normal;
+}
+
+body {
+	font-family: "Firago";
+	width: 100vw;
+	height: 100%;
+}

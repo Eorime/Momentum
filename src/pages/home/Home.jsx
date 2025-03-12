@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Container } from "./styles";
 import apiService from "../../services/api";
+import Header from "../../components/common/header/Header";
 
 const Home = () => {
 	const [tasks, setTasks] = useState([]);
@@ -18,7 +19,11 @@ const Home = () => {
 
 		fetchTasks();
 	}, []);
-	return <Container></Container>;
+	return (
+		<Container>
+			<Header />
+		</Container>
+	);
 };
 
 export default Home;
