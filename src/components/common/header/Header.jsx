@@ -6,40 +6,29 @@ import {
 	NewEmployeeButton,
 	NewTaskButton,
 	Span,
+	SvgIcon,
 } from "./styles";
 import logo from "../../../assets/icons/logo.svg";
+import { Link } from "react-router-dom";
+import { routes } from "../../../constants/routes";
 
 const Header = () => {
 	return (
 		<Container>
-			<Logo src={logo} />
+			<Link to={routes.home}>
+				<Logo src={logo} />
+			</Link>
 			<HeaderButtonWrapper>
 				<NewEmployeeButton>თანამშრომლის შექმნა</NewEmployeeButton>
-				<NewTaskButton>
-					<svg
-						width="12"
-						height="12"
-						viewBox="0 0 12 12"
-						fill="none"
-						xmlns="http://www.w3.org/2000/svg"
-					>
-						<path
-							d="M1 6H11"
-							stroke="white"
-							strokeWidth="1.5"
-							strokeLinecap="round"
-							strokeLinejoin="round"
-						/>
-						<path
-							d="M6 11V1"
-							stroke="white"
-							strokeWidth="1.5"
-							strokeLinecap="round"
-							strokeLinejoin="round"
-						/>
-					</svg>
-					<Span>შექმენი ახალი დავალება</Span>
-				</NewTaskButton>
+				<Link to={routes.createTask}>
+					<NewTaskButton>
+						<SvgIcon>
+							<path d="M1 6H11" />
+							<path d="M6 11V1" />
+						</SvgIcon>
+						<Span>შექმენი ახალი დავალება</Span>
+					</NewTaskButton>
+				</Link>
 			</HeaderButtonWrapper>
 		</Container>
 	);

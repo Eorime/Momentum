@@ -1,7 +1,12 @@
 import React from "react";
+import Header from "../../components/common/header/Header";
 
 const CreateTask = () => {
-	return <div>Create task</div>;
+	return (
+		<div>
+			<Header />
+		</div>
+	);
 };
 
 export default CreateTask;

@@ -30,12 +30,13 @@ export const NewEmployeeButton = styled.button`
 	padding: 10px 20px;
 	font-family: "Firago";
 	font-weight: 400;
-	transition: 0.4s all;
+	transition: 0.3s all ease-in-out;
 	cursor: pointer;
 
 	&:hover {
-		background-color: #8338ec;
-		color: #ffffff;
+		// background-color: #8338ec;
+		// color: #ffffff;
+		border: 1px solid #b588f4;
 	}
 `;
 
@@ -48,15 +49,28 @@ export const NewTaskButton = styled.button`
 	padding: 10px 20px;
 	font-family: "Firago";
 	font-weight: 400;
-	transition: 0.3s all;
+	transition: 0.3s all ease-in-out;
 	cursor: pointer;
 
 	&:hover {
-		background-color: rgb(78, 14, 168);
+		background-color: #b588f4;
+		border: 1px solid #b588f4;
 		color: #ffffff;
 	}
 `;
 
 export const Span = styled.span`
 	margin-left: 9px;
+`;
+
+export const SvgIcon = styled.svg`
+	width: 12px;
+	height: 12px;
+
+	& path {
+		stroke: white;
+		stroke-width: 1.5px;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+	}
 `;

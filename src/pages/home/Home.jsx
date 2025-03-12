@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Container } from "./styles";
+import { Container, HomeContainer, HomeTitle } from "./styles";
 import apiService from "../../services/api";
 import Header from "../../components/common/header/Header";
+import Filter from "../../components/pages/home/filter/Filter";
 
 const Home = () => {
 	const [tasks, setTasks] = useState([]);
@@ -22,6 +23,10 @@ const Home = () => {
 	return (
 		<Container>
 			<Header />
+			<HomeContainer>
+				<HomeTitle>დავალებების გვერდი</HomeTitle>
+				<Filter />
+			</HomeContainer>
 		</Container>
 	);
 };
