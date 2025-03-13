@@ -58,37 +58,47 @@ const Filter = ({ updateSelectedFilters }) => {
 	};
 
 	const handleOptionSelect = (option) => {
+		let updatedFilters = { ...selectedFilters };
+
 		if (activeFilter === 0) {
 			const isSelected = selectedFilters.departments.some(
 				(item) => item.id === option.id
 			);
 
-			setSelectedFilters((prev) => ({
-				...prev,
+			updatedFilters = {
+				...selectedFilters,
 				departments: isSelected
-					? prev.departments.filter((item) => item.id !== option.id)
-					: [...prev.departments, option],
-			}));
+					? selectedFilters.departments.filter((item) => item.id !== option.id)
+					: [...selectedFilters.departments, option],
+			};
 		} else if (activeFilter === 1) {
 			const isSelected = selectedFilters.priorities.some(
 				(item) => item.id === option.id
 			);
 
-			setSelectedFilters((prev) => ({
-				...prev,
+			updatedFilters = {
+				...selectedFilters,
 				priorities: isSelected
-					? prev.priorities.filter((item) => item.id !== option.id)
-					: [...prev.priorities, option],
-			}));
+					? selectedFilters.priorities.filter((item) => item.id !== option.id)
+					: [...selectedFilters.priorities, option],
+			};
 		} else if (activeFilter === 2) {
 			const isSelected = selectedFilters.employees.some(
 				(item) => item.id === option.id
 			);
 
-			setSelectedFilters((prev) => ({
-				...prev,
+			updatedFilters = {
+				...selectedFilters,
 				employees: isSelected ? [] : [option],
-			}));
+			};
+		}
+
+		//local state update
+		setSelectedFilters(updatedFilters);
+
+		//send updated filters to the parent component
+		if (updateSelectedFilters) {
+			updateSelectedFilters(updatedFilters);
 		}
 	};
 
