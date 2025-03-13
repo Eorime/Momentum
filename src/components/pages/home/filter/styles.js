@@ -1,7 +1,11 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
+	position: relative;
 	width: 688px;
+`;
+
+export const FilterContainer = styled.div`
 	display: flex;
 	justify-content: space-around;
 	align-items: center;
@@ -43,4 +47,25 @@ export const FilterItem = styled.div`
 	&:hover ${FilterArrow} path {
 		fill: #8338ec;
 	}
+`;
+
+export const FilterOptions = styled.div`
+	margin-top: 11px;
+	background-color: #ffffff;
+	height: auto;
+	max-height: 300px;
+	padding: 40px 30px 20px 30px;
+	border-radius: 10px;
+	border: 0.5px solid #8338ec;
+`;
+
+export const FilterOptionWrapper = styled.div``;
+
+export const FilterOptionCheck = styled.div``;
+
+export const FilterOptionLabel = styled.p`
+	margin: 0;
+	padding: 0;
+	color: #212529;
+	font-size: 16px;
 `;

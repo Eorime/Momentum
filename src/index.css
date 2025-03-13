@@ -1,5 +1,13 @@
 @font-face {
 	font-family: "Firago";
+	src: url("./assets/fonts/FiraGO-Light.otf") format("opentype"),
+		url("./assets/fonts/FiraGO-Light.ttf") format("truetype");
+	font-weight: 200;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: "Firago";
 	src: url("./assets/fonts/FiraGO-Regular.otf") format("opentype"),
 		url("./assets/fonts/FiraGO-Regular.ttf") format("truetype");
 	font-weight: 400;
