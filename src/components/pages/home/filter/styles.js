@@ -16,7 +16,7 @@ export const FilterContainer = styled.div`
 `;
 
 export const FilterLabel = styled.p`
-	color: #0d0f10;
+	color: ${(props) => (props.active === "true" ? "#8338EC" : "#0d0f10")};
 	font-family: "Firago";
 	font-weight: 400;
 	margin: 0;
@@ -29,7 +29,7 @@ export const FilterArrow = styled.svg`
 	preserveaspectratio: xMidYMid meet;
 
 	& path {
-		fill: #0d0f10;
+		fill: ${(props) => (props.active === "true" ? "#8338EC" : "#0d0f10")}
 		transition: fill 0.3s ease-in-out;
 	}
 `;
@@ -39,6 +39,7 @@ export const FilterItem = styled.div`
 	gap: 13px;
 	align-items: center;
 	cursor: pointer;
+	color: ${(props) => (props.active === "true" ? "#8338EC" : "#0d0f10")};
 
 	&:hover ${FilterLabel} {
 		color: #8338ec;
@@ -51,21 +52,35 @@ export const FilterItem = styled.div`
 
 export const FilterOptions = styled.div`
 	margin-top: 11px;
+	display: flex;
+	flex-direction: column;
+	gap: 22px;
 	background-color: #ffffff;
 	height: auto;
 	max-height: 300px;
-	padding: 40px 30px 20px 30px;
+	padding-left: 30px;
+	padding-top: 40px;
+	padding-bottom: 20px;
 	border-radius: 10px;
 	border: 0.5px solid #8338ec;
 `;
 
-export const FilterOptionWrapper = styled.div``;
+export const FilterOptionWrapper = styled.div`
+	display: flex;
+	gap: 15px;
+`;
 
-export const FilterOptionCheck = styled.div``;
+export const FilterOptionCheck = styled.input`
+	width: 22px;
+	border-radius: 6px;
+	border: 1px solid #212529;
+`;
 
 export const FilterOptionLabel = styled.p`
 	margin: 0;
 	padding: 0;
 	color: #212529;
 	font-size: 16px;
+	font-family: "Firago";
+	font-weight: 400;
 `;

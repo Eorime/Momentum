@@ -20,6 +20,7 @@ const Home = () => {
 
 		fetchTasks();
 	}, []);
+
 	return (
 		<Container>
 			<Header />
