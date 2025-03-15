@@ -38,28 +38,38 @@ const CreateTask = () => {
 	});
 
 	const [validations, setValidations] = useState({
-		nameMinLength: false,
-		nameMaxLength: true,
-		descMinLength: false,
-		descMaxLength: true,
+		nameMinLength: null,
+		nameMaxLength: null,
+		descMinWords: null,
+		descMaxLength: null,
 	});
 
 	useEffect(() => {
+		const countWords = (text) => {
+			if (!text || text.trim() === "") return 0;
+			return text
+				.trim()
+				.split(/\s+/)
+				.filter((word) => word.length > 0).length;
+		};
+
+		const descriptionWordCount = countWords(formData.description);
+
 		setValidations({
 			nameMinLength:
 				formData.name.trim().length === 0
 					? null
-					: formData.name.trim().length >= 2,
+					: formData.name.trim().length >= 3,
 			nameMaxLength:
 				formData.name.trim().length === 0
 					? null
 					: formData.name.trim().length <= 255,
-			descMinLength:
-				!formData.description || formData.description.trim().length === 0
+			descMinWords:
+				!formData.description || formData.description.trim() === ""
 					? null
-					: formData.description.trim().length >= 2,
+					: descriptionWordCount >= 4,
 			descMaxLength:
-				!formData.description || formData.description.trim().length === 0
+				!formData.description || formData.description.trim() === ""
 					? null
 					: formData.description.trim().length <= 255,
 		});
@@ -83,13 +93,27 @@ const CreateTask = () => {
 
 	useEffect(() => {
 		const checkFormValidity = () => {
+			const countWords = (text) => {
+				if (!text || text.trim() === "") return 0;
+				return text
+					.trim()
+					.split(/\s+/)
+					.filter((word) => word.length > 0).length;
+			};
+
+			const descriptionWordCount = countWords(formData.description);
+
 			const isValid =
 				formData.name &&
-				formData.name.trim().length >= 2 &&
+				formData.name.trim().length >= 3 &&
 				formData.priority &&
 				formData.status &&
 				formData.department &&
-				(formData.department ? formData.employee : true);
+				formData.due_date &&
+				(formData.department ? formData.employee : true) &&
+				(!formData.description ||
+					formData.description.trim() === "" ||
+					descriptionWordCount >= 4);
 
 			setIsFormValid(isValid);
 		};
@@ -233,7 +257,7 @@ const CreateTask = () => {
 											: "invalid"
 									}
 								>
-									მინიმუმ 2 სიმბოლო
+									მინიმუმ 3 სიმბოლო
 								</Validation>
 								<Validation
 									status={
@@ -263,14 +287,14 @@ const CreateTask = () => {
 							<ValidationsWrapper>
 								<Validation
 									status={
-										validations.descMinLength === null
+										validations.descMinWords === null
 											? "default"
-											: validations.descMinLength
+											: validations.descMinWords
 											? "valid"
 											: "invalid"
 									}
 								>
-									მინიმუმ 2 სიმბოლო
+									მინიმუმ 4 სიტყვა
 								</Validation>
 								<Validation
 									status={
@@ -327,7 +351,7 @@ const CreateTask = () => {
 							/>
 						</InputWrapper>
 						<DateInputWrapper>
-							<InputLabel>დედლაინი</InputLabel>
+							<InputLabel>დედლაინი* </InputLabel>
 							<DateInput
 								type="date"
 								name="due_date"
