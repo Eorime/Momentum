@@ -145,7 +145,7 @@ const Filter = ({ updateSelectedFilters }) => {
 								onChange={() => handleOptionSelect(option)}
 							/>
 							<FilterOptionLabel htmlFor={`option-${option.id}`}>
-								{option.name}
+								{option.name} {option.surname}
 							</FilterOptionLabel>
 						</FilterOptionWrapper>
 					))}

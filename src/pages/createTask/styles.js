@@ -39,7 +39,7 @@ export const FormASide = styled.div`
 export const FormBSide = styled.div`
 	display: flex;
 	flex-direction: column;
-	gap: 55px;
+	gap: 70px;
 	width: 550px;
 `;
 
@@ -55,6 +55,7 @@ export const InputLabel = styled.label`
 	font-weight: 400;
 	color: #343a40;
 	margin-bottom: 6px;
+	opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
 `;
 
 export const Input = styled.input`
@@ -120,8 +121,12 @@ export const ValidationsWrapper = styled.div`
 export const Validation = styled.span`
 	line-height: 1.3;
 	font-size: 10px;
-	color: #6c757d;
 	font-weight: 200;
+	color: ${(props) => {
+		if (props.status === "valid") return "#08A508";
+		if (props.status === "invalid") return "#FA4D4D";
+		return "#6c757d";
+	}};
 `;
 
 export const Avatar = styled.img`
@@ -136,4 +141,9 @@ export const Icon = styled.img`
 	width: 16px;
 	height: 16px;
 	margin-right: 8px;
+`;
+
+export const SubmitButton = styled.button`
+	position: absolute;
+	right: 0;
 `;

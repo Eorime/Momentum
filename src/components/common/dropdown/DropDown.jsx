@@ -5,6 +5,7 @@ import { FilterArrow } from "../../pages/home/filter/styles";
 const DropdownContainer = styled.div`
 	position: relative;
 	width: 100%;
+	opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
 `;
 
 const DropdownHeader = styled.div`
@@ -18,7 +19,8 @@ const DropdownHeader = styled.div`
 	font-weight: 200;
 	border-radius: 5px;
 	color: #0d0f10;
-	cursor: pointer;
+	cursor: ${({ disabled }) => (disabled ? "default" : "pointer")};
+	pointer-events: ${({ disabled }) => (disabled ? "none" : "all")};
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -91,11 +93,17 @@ const DropDown = ({
 	onSelect,
 	renderOption = null,
 	renderSelected = null,
+	value = null,
+	disabled = false,
 }) => {
 	const displayPlaceholder = options.length > 0 ? options[0].name : placeholder;
 	const [isOpen, setIsOpen] = useState(false);
 	const [selectedOption, setSelectedOption] = useState(null);
 	const dropdownRef = useRef(null);
+
+	useEffect(() => {
+		setSelectedOption(value);
+	}, [value]);
 
 	useEffect(() => {
 		const handleClickOutside = (event) => {
@@ -119,8 +127,8 @@ const DropDown = ({
 	};
 
 	return (
-		<DropdownContainer ref={dropdownRef}>
-			<DropdownHeader onClick={toggleDropdown}>
+		<DropdownContainer ref={dropdownRef} disabled={disabled}>
+			<DropdownHeader onClick={toggleDropdown} disabled={disabled}>
 				<ContentWrapper centered={!!selectedOption} isOpen={isOpen}>
 					{selectedOption ? (
 						renderSelected ? (
