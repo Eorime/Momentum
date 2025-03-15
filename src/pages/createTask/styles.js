@@ -110,3 +110,16 @@ export const DateInput = styled.input`
 	border-radius: 5px;
 	color: #0d0f10;
 `;
+
+export const ValidationsWrapper = styled.div`
+	display: flex;
+	flex-direction: column;
+	margin-top: 4px;
+`;
+
+export const Validation = styled.span`
+	line-height: 1.3;
+	font-size: 10px;
+	color: #6c757d;
+	font-weight: 200;
+`;

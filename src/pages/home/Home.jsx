@@ -17,7 +17,6 @@ const Home = () => {
 		const fetchTasks = async () => {
 			try {
 				const response = await apiService.getTasks();
-
 				setTasks(response.data);
 				setFilteredTasks(response.data);
 			} catch (error) {
