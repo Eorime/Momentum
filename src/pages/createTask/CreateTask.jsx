@@ -37,6 +37,10 @@ const CreateTask = () => {
 		status: null,
 	});
 
+	const saveFormToStorage = () => {
+		localStorage.setItem("taskFormData", JSON.stringify(formData));
+	};
+
 	const [validations, setValidations] = useState({
 		nameMinLength: null,
 		nameMaxLength: null,
@@ -123,16 +127,49 @@ const CreateTask = () => {
 
 	const [filteredEmployees, setFilteredEmployees] = useState([]);
 
+	const loadFormFromStorage = () => {
+		const savedData = localStorage.getItem("taskFormData");
+		if (savedData) {
+			const parsedData = JSON.parse(savedData);
+			setFormData(parsedData);
+
+			//restore selected values for dropdowns
+			if (parsedData.department) {
+				setSelected((prev) => ({ ...prev, department: parsedData.department }));
+			}
+
+			if (parsedData.employee) {
+				setSelected((prev) => ({ ...prev, employee: parsedData.employee }));
+			}
+
+			if (parsedData.priority) {
+				setSelected((prev) => ({ ...prev, priority: parsedData.priority }));
+			}
+
+			if (parsedData.status) {
+				setSelected((prev) => ({ ...prev, status: parsedData.status }));
+			}
+		}
+	};
+
+	useEffect(() => {
+		loadFormFromStorage();
+	}, []);
+
 	const handleDropdownChange = (field) => (selectedOption) => {
 		setSelected((prev) => ({
 			...prev,
 			[field]: selectedOption,
 		}));
 
-		setFormData((prev) => ({
-			...prev,
-			[field]: selectedOption,
-		}));
+		setFormData((prev) => {
+			const newData = {
+				...prev,
+				[field]: selectedOption,
+			};
+			localStorage.setItem("taskFormData", JSON.stringify(newData));
+			return newData;
+		});
 
 		if (field === "department") {
 			const departmentEmployees = dropdownData.employees.filter(
@@ -146,17 +183,25 @@ const CreateTask = () => {
 				employee: "",
 			}));
 
-			setFormData((prev) => ({ ...prev, employee: null }));
+			setFormData((prev) => {
+				const newData = { ...prev, employee: null };
+				localStorage.setItem("taskFormData", JSON.stringify(newData));
+				return newData;
+			});
 		}
 		console.log(`selected ${field}:`, selectedOption.id);
 	};
 
 	const handleDateChange = (e) => {
 		const { value } = e.target;
-		setFormData((prev) => ({
-			...prev,
-			due_date: value,
-		}));
+		setFormData((prev) => {
+			const newData = {
+				...prev,
+				due_date: value,
+			};
+			localStorage.setItem("taskFormData", JSON.stringify(newData));
+			return newData;
+		});
 	};
 
 	useEffect(() => {
@@ -217,14 +262,17 @@ const CreateTask = () => {
 				name: formData.name,
 				description: formData.description,
 				due_date: formData.due_date,
-				status: formData.status,
-				priority: formData.priority,
-				department: formData.department,
-				employee: formData.employee,
+				status_id: formData.status,
+				priority_id: formData.priority,
+				department_id: formData.department,
+				employee_id: formData.employee,
 			};
+
+			console.log("sending task data:", taskData);
 
 			const response = await apiService.createTask(taskData);
 			console.log("task created", response.data);
+			localStorage.removeItem("taskFormData");
 			navigate("/");
 		} catch (error) {
 			console.error("error creating task:", error);
@@ -243,9 +291,14 @@ const CreateTask = () => {
 							<Input
 								name="name"
 								value={formData.name}
-								onChange={(e) =>
-									setFormData((prev) => ({ ...prev, name: e.target.value }))
-								}
+								onChange={(e) => {
+									const newFormData = { ...formData, name: e.target.value };
+									setFormData(newFormData);
+									localStorage.setItem(
+										"taskFormData",
+										JSON.stringify(newFormData)
+									);
+								}}
 							/>
 							<ValidationsWrapper>
 								<Validation
@@ -277,12 +330,17 @@ const CreateTask = () => {
 							<TextArea
 								name="description"
 								value={formData.description}
-								onChange={(e) =>
-									setFormData((prev) => ({
-										...prev,
+								onChange={(e) => {
+									const newFormData = {
+										...formData,
 										description: e.target.value,
-									}))
-								}
+									};
+									setFormData(newFormData);
+									localStorage.setItem(
+										"taskFormData",
+										JSON.stringify(newFormData)
+									);
+								}}
 							></TextArea>
 							<ValidationsWrapper>
 								<Validation

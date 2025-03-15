@@ -95,6 +95,7 @@ const Filter = ({ updateSelectedFilters }) => {
 
 		//local state update
 		setSelectedFilters(updatedFilters);
+		console.log(updatedFilters);
 
 		//send updated filters to the parent component
 		if (updateSelectedFilters) {
