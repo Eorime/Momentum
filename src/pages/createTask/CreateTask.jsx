@@ -21,30 +21,58 @@ import apiService from "../../services/api";
 import DropDown from "../../components/common/dropdown/DropDown";
 
 const CreateTask = () => {
-	const [departments, setDepartments] = useState([]);
-	const [selectedDepartment, setSelectedDepartment] = useState("");
-	const [employees, setEmployees] = useState([]);
-	const [priority, setPriority] = useState([]);
-	const [status, setStatus] = useState([]);
+	const [dropdownData, setDropdownData] = useState({
+		departments: [],
+		employees: [],
+		priorities: [],
+		statuses: [],
+	});
+
+	const [selected, setSelected] = useState({
+		department: "",
+		employee: "",
+		priority: "",
+		status: "",
+	});
+
+	const handleDropdownChange = (field) => (selectedOption) => {
+		setSelected((prev) => ({
+			...prev,
+			[field]: selectedOption.id,
+		}));
+		console.log(`selected ${field}:`, selectedOption.id);
+	};
 
 	useEffect(() => {
-		const fetchDepartments = async () => {
+		//fetch all needed data at once
+		const fetchAllData = async () => {
 			try {
-				const response = await apiService.getDepartments();
-				console.log(response);
-				setDepartments(response.data);
+				const apiCalls = {
+					departments: apiService.getDepartments(),
+					employees: apiService.getEmployees(),
+					priorities: apiService.getPriorities(),
+					statuses: apiService.getStatuses(),
+				};
+
+				//execute all api calls
+				const results = await Promise.all(Object.values(apiCalls));
+
+				//update states
+				const keys = Object.keys(apiCalls);
+				const newData = {};
+
+				keys.forEach((key, index) => {
+					newData[key] = results[index].data;
+				});
+
+				setDropdownData(newData);
 			} catch (error) {
-				console.log("couldn't fetch departments", error);
+				console.log("error fetching dropdown data:", error);
 			}
 		};
 
-		fetchDepartments();
+		fetchAllData();
 	}, []);
-
-	const handleDepartmentChange = (selectedOption) => {
-		setSelectedDepartment(selectedOption.id);
-		console.log(selectedOption.id);
-	};
 
 	return (
 		<Container>
@@ -72,11 +100,17 @@ const CreateTask = () => {
 						<FiltersContainer>
 							<InputWrapper>
 								<InputLabel>პრიორიტეტი*</InputLabel>
-								<Input />
+								<DropDown
+									options={dropdownData.priorities}
+									onSelect={handleDropdownChange("priority")}
+								/>{" "}
 							</InputWrapper>
 							<InputWrapper>
 								<InputLabel>სტატუსი*</InputLabel>
-								<Input />
+								<DropDown
+									options={dropdownData.statuses}
+									onSelect={handleDropdownChange("status")}
+								/>
 							</InputWrapper>
 						</FiltersContainer>
 					</FormASide>
@@ -84,13 +118,16 @@ const CreateTask = () => {
 						<InputWrapper>
 							<InputLabel>დეპარტამენტი*</InputLabel>
 							<DropDown
-								options={departments}
-								onSelect={handleDepartmentChange}
+								options={dropdownData.departments}
+								onSelect={handleDropdownChange("department")}
 							/>
 						</InputWrapper>
 						<InputWrapper>
 							<InputLabel>პასუხისმგებელი თანამშრომელი*</InputLabel>
-							<Input />
+							<DropDown
+								options={dropdownData.employees}
+								onSelect={handleDropdownChange("employee")}
+							/>
 						</InputWrapper>
 						<DateInputWrapper>
 							<InputLabel>დედლაინი</InputLabel>
