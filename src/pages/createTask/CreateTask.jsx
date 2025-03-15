@@ -35,11 +35,26 @@ const CreateTask = () => {
 		status: "",
 	});
 
+	const [filteredEmployees, setFilteredEmployees] = useState([]);
+
 	const handleDropdownChange = (field) => (selectedOption) => {
 		setSelected((prev) => ({
 			...prev,
 			[field]: selectedOption.id,
 		}));
+
+		if (field === "department") {
+			const departmentEmployees = dropdownData.employees.filter(
+				(employee) => employee.department.id === selectedOption.id
+			);
+			setFilteredEmployees(departmentEmployees);
+
+			//reset employee selection when department changes
+			setSelected((prev) => ({
+				...prev,
+				employee: "",
+			}));
+		}
 		console.log(`selected ${field}:`, selectedOption.id);
 	};
 
@@ -125,8 +140,10 @@ const CreateTask = () => {
 						<InputWrapper>
 							<InputLabel>პასუხისმგებელი თანამშრომელი*</InputLabel>
 							<DropDown
-								options={dropdownData.employees}
+								options={filteredEmployees}
 								onSelect={handleDropdownChange("employee")}
+								placeholder={!selected.department ? "აირჩიეთ დეპარტამენტი" : ""}
+								disabled={!selected.department}
 							/>
 						</InputWrapper>
 						<DateInputWrapper>
