@@ -67,17 +67,31 @@ const DropdownItem = styled.div`
 	font-family: "Firago";
 	font-weight: 200;
 	color: #0d0f10;
+	display: flex;
+	align-items: center;
 
 	&:hover {
 		background-color: #f8f9fa;
 	}
 `;
 
+const ContentWrapper = styled.div`
+	flex-grow: 1;
+	display: flex;
+	align-items: center;
+`;
+
 const Placeholder = styled.span`
 	color: ${({ selected }) => (selected ? "#0d0f10" : "#6c757d")};
 `;
 
-const DropDown = ({ options = [], placeholder = "", onSelect }) => {
+const DropDown = ({
+	options = [],
+	placeholder = "",
+	onSelect,
+	renderOption = null,
+	renderSelected = null,
+}) => {
 	const displayPlaceholder = options.length > 0 ? options[0].name : placeholder;
 	const [isOpen, setIsOpen] = useState(false);
 	const [selectedOption, setSelectedOption] = useState(null);
@@ -107,9 +121,17 @@ const DropDown = ({ options = [], placeholder = "", onSelect }) => {
 	return (
 		<DropdownContainer ref={dropdownRef}>
 			<DropdownHeader onClick={toggleDropdown}>
-				<Placeholder selected={!!selectedOption}>
-					{selectedOption ? selectedOption.name : displayPlaceholder}
-				</Placeholder>
+				<ContentWrapper centered={!!selectedOption} isOpen={isOpen}>
+					{selectedOption ? (
+						renderSelected ? (
+							renderSelected(selectedOption)
+						) : (
+							selectedOption.name
+						)
+					) : (
+						<Placeholder selected={false}>{displayPlaceholder}</Placeholder>
+					)}
+				</ContentWrapper>
 				<DropdownIcon isOpen={isOpen}>
 					<FilterArrow>
 						<svg width="14" height="8" viewBox="0 0 14 8" fill="currentColor">
@@ -122,7 +144,7 @@ const DropDown = ({ options = [], placeholder = "", onSelect }) => {
 			<DropdownList isOpen={isOpen}>
 				{options.map((option) => (
 					<DropdownItem key={option.id} onClick={() => handleSelect(option)}>
-						{option.name}
+						{renderOption ? renderOption(option) : option.name}
 					</DropdownItem>
 				))}
 			</DropdownList>

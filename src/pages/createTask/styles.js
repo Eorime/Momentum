@@ -123,3 +123,17 @@ export const Validation = styled.span`
 	color: #6c757d;
 	font-weight: 200;
 `;
+
+export const Avatar = styled.img`
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	margin-right: 10px;
+	object-fit: cover;
+`;
+
+export const Icon = styled.img`
+	width: 16px;
+	height: 16px;
+	margin-right: 8px;
+`;

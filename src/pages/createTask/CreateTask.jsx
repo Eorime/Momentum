@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Header from "../../components/common/header/Header";
 import {
+	Avatar,
 	Container,
 	CreateFormContainer,
 	CreateTaskContainer,
@@ -10,6 +11,7 @@ import {
 	FiltersContainer,
 	FormASide,
 	FormBSide,
+	Icon,
 	Input,
 	InputLabel,
 	InputWrapper,
@@ -40,7 +42,7 @@ const CreateTask = () => {
 	const handleDropdownChange = (field) => (selectedOption) => {
 		setSelected((prev) => ({
 			...prev,
-			[field]: selectedOption.id,
+			[field]: selectedOption,
 		}));
 
 		if (field === "department") {
@@ -89,6 +91,22 @@ const CreateTask = () => {
 		fetchAllData();
 	}, []);
 
+	const renderEmployee = (employee) => (
+		<>
+			{employee.avatar && (
+				<Avatar src={employee.avatar} alt={`${employee.name}' image`} />
+			)}
+			{employee.name} {employee.surname}
+		</>
+	);
+
+	const renderPriority = (priority) => (
+		<>
+			{priority.icon && <Icon src={priority.icon} />}
+			{priority.name}
+		</>
+	);
+
 	return (
 		<Container>
 			<Header />
@@ -117,6 +135,8 @@ const CreateTask = () => {
 								<InputLabel>პრიორიტეტი*</InputLabel>
 								<DropDown
 									options={dropdownData.priorities}
+									renderOption={renderPriority}
+									renderSelected={renderPriority}
 									onSelect={handleDropdownChange("priority")}
 								/>{" "}
 							</InputWrapper>
@@ -142,6 +162,8 @@ const CreateTask = () => {
 							<DropDown
 								options={filteredEmployees}
 								onSelect={handleDropdownChange("employee")}
+								renderOption={renderEmployee}
+								renderSelected={renderEmployee}
 								placeholder={!selected.department ? "აირჩიეთ დეპარტამენტი" : ""}
 								disabled={!selected.department}
 							/>
