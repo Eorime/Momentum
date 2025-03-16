@@ -60,12 +60,16 @@ export const FilterOptions = styled.div`
 	gap: 22px;
 	background-color: #ffffff;
 	height: auto;
-	max-height: 300px;
+	height: auto;
+	max-height: 280px;
 	padding-left: 30px;
 	padding-top: 40px;
 	padding-bottom: 20px;
 	border-radius: 10px;
 	border: 0.5px solid #8338ec;
+	position: absolute;
+	z-index: 2;
+	width: 655px;
 
 	&::-webkit-scrollbar {
 		display: none;

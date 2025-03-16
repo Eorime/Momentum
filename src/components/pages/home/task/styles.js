@@ -3,18 +3,17 @@ import styled from "styled-components";
 export const Container = styled.div`
 	position: relative;
 	width: 380px;
-	height: 217px;
 	display: flex;
 	gap: 28px;
 	padding: 20px;
 	flex-direction: column;
-	border: solid 1px #ffbe0b;
-	border-radius: 15px;
+	color: #212529;
 `;
 
 export const FiltersContainer = styled.div`
 	display: flex;
 	flex-direction: row;
+	justify-content: space-between;
 `;
 
 export const TextContainer = styled.div``;
@@ -34,10 +33,13 @@ export const TaskDescription = styled.p`
 export const EmployeeContainer = styled.div`
 	display: flex;
 	justify-content: space-between;
+	width: 100%;
+	align-items: center;
 `;
 
 export const PriorityWrapper = styled.div`
 	display: flex;
+	align-items: center;
 	gap: 4px;
 	font-family: "Firago";
 	font-weight: 500;
@@ -46,15 +48,17 @@ export const PriorityWrapper = styled.div`
 	padding: 4px 6px;
 `;
 
-export const PriorityLabel = styled.span``;
+export const PriorityLabel = styled.span`
+	font-size: 12px;
+	font-family: "Firago";
+	font-weight: 500;
+`;
 
 export const PriorityIcon = styled.img`
 	width: 16px;
 `;
 
 export const EmployeeAvatar = styled.img`
-	position: absolute;
-	bottom: 10px;
 	width: 30px;
 	height: 30px;
 	border-radius: 50%;
@@ -72,4 +76,24 @@ export const Department = styled.div`
 	font-family: "Firago";
 	font-size: 12px;
 	font-weight: 400;
+`;
+
+export const CommentsContainer = styled.div`
+	display: flex;
+	gap: 4px;
+	align-items: center;
+`;
+
+export const CommentIcon = styled.svg`
+	width: 20px;
+	height: 20px;
+	bottom: 25px;
+	right: 20px;
+	color: #6c757d;
+`;
+
+export const CommentCount = styled.span`
+	font-family: "Firago";
+	font-size: 14px;
+	font-weight: 300;
 `;
