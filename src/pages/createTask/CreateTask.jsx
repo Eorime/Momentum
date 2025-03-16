@@ -262,10 +262,10 @@ const CreateTask = () => {
 				name: formData.name,
 				description: formData.description,
 				due_date: formData.due_date,
-				status_id: formData.status,
-				priority_id: formData.priority,
-				department_id: formData.department,
-				employee_id: formData.employee,
+				status_id: formData.status.id,
+				priority_id: formData.priority.id,
+				department_id: formData.department.id,
+				employee_id: formData.employee ? formData.employee.id : null,
 			};
 
 			console.log("sending task data:", taskData);
