@@ -14,6 +14,7 @@ export const Container = styled.div`
 
 export const FiltersContainer = styled.div`
 	display: flex;
+	flex-direction: row;
 `;
 
 export const TextContainer = styled.div``;
@@ -24,7 +25,11 @@ export const TaskTitle = styled.h1`
 	font-weight: 500;
 `;
 
-export const TaskDescription = styled.p``;
+export const TaskDescription = styled.p`
+	font-family: "Firago";
+	font-size: 14px;
+	font-weight: 300;
+`;
 
 export const EmployeeContainer = styled.div`
 	display: flex;
@@ -55,4 +60,16 @@ export const EmployeeAvatar = styled.img`
 	border-radius: 50%;
 	margin-right: 10px;
 	object-fit: cover;
+`;
+
+export const DueDate = styled.span`
+	font-family: "Firago";
+	font-size: 12px;
+	font-weight: 400;
+`;
+
+export const Department = styled.div`
+	font-family: "Firago";
+	font-size: 12px;
+	font-weight: 400;
 `;
