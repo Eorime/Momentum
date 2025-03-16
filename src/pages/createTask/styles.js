@@ -9,7 +9,7 @@ export const Container = styled.div`
 export const CreateTaskContainer = styled.div`
 	padding-left: 120px;
 	padding-right: 120px;
-	padding-top: 140px;
+	padding-top: 100px;
 `;
 
 export const CreateTaskTitle = styled.h1`

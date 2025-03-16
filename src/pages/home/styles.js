@@ -12,6 +12,7 @@ export const HomeTitle = styled.h1`
 	font-size: 34px;
 	font-family: "Firago";
 	font-weight: 600;
+	margin: 0;
 	margin-bottom: 52px;
 	color: #212529;
 `;
