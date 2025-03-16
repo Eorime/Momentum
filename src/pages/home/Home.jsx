@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
 	ColumnHeader,
 	Container,
@@ -22,9 +23,16 @@ const TaskWrapper = styled.div`
 	background-color: white;
 	overflow: hidden;
 	margin-bottom: 16px;
+	cursor: pointer;
+	transition: transform 0.2s ease;
+
+	&:hover {
+		transform: translateY(-2px);
+	}
 `;
 
 const Home = () => {
+	const navigate = useNavigate();
 	const [tasks, setTasks] = useState([]);
 	const [filteredTasks, setFilteredTasks] = useState([]);
 	const [statuses, setStatuses] = useState([]);
@@ -100,6 +108,10 @@ const Home = () => {
 		setAppliedFilters(filters);
 	};
 
+	const handleTaskClick = (taskId) => {
+		navigate(`/task/${taskId}`);
+	};
+
 	//get the color from the color map
 	const getStatusColor = (status) => {
 		return statusColorMap[status.name] || statusColorMap.default;
@@ -127,7 +139,10 @@ const Home = () => {
 		return grouped;
 	};
 
-	const groupedTasks = statuses.length > 0 ? groupTasksByStatus() : {};
+	//memoize
+	const groupedTasks = React.useMemo(() => {
+		return statuses.length > 0 ? groupTasksByStatus() : {};
+	}, [filteredTasks, statuses]);
 
 	return (
 		<Container>
@@ -159,6 +174,7 @@ const Home = () => {
 										<TaskWrapper
 											key={task.id}
 											borderColor={getStatusColor(status)}
+											onClick={() => handleTaskClick(task.id)}
 										>
 											<Task task={task} />
 										</TaskWrapper>

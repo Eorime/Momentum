@@ -160,6 +160,7 @@ export const SubmitButton = styled.button`
 	color: #ffffff;
 	cursor: pointer;
 	transition: 0.3s all ease-in-out;
+	border: none;
 
 	&:hover {
 		background-color: #b588f4;
