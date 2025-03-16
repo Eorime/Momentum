@@ -417,10 +417,10 @@ const CreateTask = () => {
 								onChange={handleDateChange}
 							/>
 						</DateInputWrapper>
+						<SubmitButton onClick={handleSubmit} disabled={!isFormValid}>
+							დავალების შექმნა
+						</SubmitButton>
 					</FormBSide>
-					<SubmitButton onClick={handleSubmit} disabled={!isFormValid}>
-						დავალების შექმნა
-					</SubmitButton>
 				</CreateFormContainer>
 			</CreateTaskContainer>
 		</Container>

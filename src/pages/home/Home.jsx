@@ -3,6 +3,7 @@ import { Container, HomeContainer, HomeTitle } from "./styles";
 import apiService from "../../services/api";
 import Header from "../../components/common/header/Header";
 import Filter from "../../components/pages/home/filter/Filter";
+import Task from "../../components/pages/home/task/Task";
 
 const Home = () => {
 	const [tasks, setTasks] = useState([]);
@@ -73,13 +74,11 @@ const Home = () => {
 				<HomeTitle>დავალებების გვერდი</HomeTitle>
 				<Filter updateSelectedFilters={handleFilterUpdate} />
 
-				<div>
-					{filteredTasks.length > 0 ? (
-						filteredTasks.map((task) => <div key={task.id}>{task.name}</div>)
-					) : (
-						<div>no tasks </div>
-					)}
-				</div>
+				{filteredTasks.length > 0 ? (
+					filteredTasks.map((task) => <Task key={task.id} task={task} />)
+				) : (
+					<div>no tasks</div>
+				)}
 			</HomeContainer>
 		</Container>
 	);

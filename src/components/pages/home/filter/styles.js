@@ -20,6 +20,8 @@ export const FilterLabel = styled.p`
 	font-family: "Firago";
 	font-weight: 400;
 	margin: 0;
+	display: flex;
+	align-items: center;
 	transition: color 0.3s ease-in-out;
 `;
 
@@ -54,6 +56,7 @@ export const FilterOptions = styled.div`
 	margin-top: 11px;
 	display: flex;
 	flex-direction: column;
+	overflow-y: scroll;
 	gap: 22px;
 	background-color: #ffffff;
 	height: auto;
@@ -63,6 +66,13 @@ export const FilterOptions = styled.div`
 	padding-bottom: 20px;
 	border-radius: 10px;
 	border: 0.5px solid #8338ec;
+
+	&::-webkit-scrollbar {
+		display: none;
+	}
+
+	-ms-overflow-style: none;
+	scrollbar-width: none;
 `;
 
 export const FilterOptionWrapper = styled.div`
@@ -76,11 +86,21 @@ export const FilterOptionCheck = styled.input`
 	border: 1px solid #212529;
 `;
 
-export const FilterOptionLabel = styled.p`
+export const FilterOptionLabel = styled.div`
 	margin: 0;
 	padding: 0;
 	color: #212529;
 	font-size: 16px;
 	font-family: "Firago";
 	font-weight: 400;
+	display: flex;
+	align-items: center;
+`;
+
+export const FilterAvatar = styled.img`
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	margin-right: 10px;
+	object-fit: cover;
 `;

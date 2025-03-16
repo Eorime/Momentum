@@ -27,6 +27,10 @@ export const CreateFormContainer = styled.div`
 	display: flex;
 	gap: 160px;
 	padding: 65px 55px;
+	padding-left: 55px;
+	padding-right: 55px;
+	padding-top: 65px;
+	padding-bottom: 300px;
 `;
 
 export const FormASide = styled.div`
@@ -37,6 +41,7 @@ export const FormASide = styled.div`
 `;
 
 export const FormBSide = styled.div`
+	position: relative;
 	display: flex;
 	flex-direction: column;
 	gap: 70px;
@@ -146,4 +151,24 @@ export const Icon = styled.img`
 export const SubmitButton = styled.button`
 	position: absolute;
 	right: 0;
+	bottom: -30%;
+	background-color: #8338ec;
+	border-radius: 5px;
+	padding: 10px 20px;
+	font-family: "Firago";
+	font-weight: 400;
+	color: #ffffff;
+	cursor: pointer;
+	transition: 0.3s all ease-in-out;
+
+	&:hover {
+		background-color: #b588f4;
+	}
+
+	&:disabled {
+		background-color: #b588f4;
+		pointer-events: none;
+		cursor: default;
+		border: none;
+	}
 `;

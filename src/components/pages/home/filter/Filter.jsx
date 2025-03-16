@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import {
 	Container,
 	FilterArrow,
+	FilterAvatar,
 	FilterContainer,
 	FilterItem,
 	FilterLabel,
@@ -146,7 +147,12 @@ const Filter = ({ updateSelectedFilters }) => {
 								onChange={() => handleOptionSelect(option)}
 							/>
 							<FilterOptionLabel htmlFor={`option-${option.id}`}>
-								{option.name} {option.surname}
+								<>
+									{activeFilter === 2 && option.avatar && (
+										<FilterAvatar src={option.avatar} alt={option.name} />
+									)}
+									{option.name} {option.surname}
+								</>
 							</FilterOptionLabel>
 						</FilterOptionWrapper>
 					))}
