@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
 	Container,
 	HeaderButtonWrapper,
@@ -11,15 +11,28 @@ import {
 import logo from "../../../assets/icons/logo.svg";
 import { Link } from "react-router-dom";
 import { routes } from "../../../constants/routes";
+import Modal from "../modal/Modal";
 
 const Header = () => {
+	const [openModal, setOpenModal] = useState(false);
+
+	const handleEmployeeButton = () => {
+		setOpenModal(!openModal);
+	};
+
+	const closeModal = () => {
+		setOpenModal(false);
+	};
+
 	return (
 		<Container>
 			<Link to={routes.home}>
 				<Logo src={logo} />
 			</Link>
 			<HeaderButtonWrapper>
-				<NewEmployeeButton>თანამშრომლის შექმნა</NewEmployeeButton>
+				<NewEmployeeButton onClick={handleEmployeeButton}>
+					თანამშრომლის შექმნა
+				</NewEmployeeButton>
 				<Link to={routes.createTask}>
 					<NewTaskButton>
 						<SvgIcon>
@@ -30,6 +43,7 @@ const Header = () => {
 					</NewTaskButton>
 				</Link>
 			</HeaderButtonWrapper>
+			{openModal && <Modal onClose={closeModal} />}
 		</Container>
 	);
 };

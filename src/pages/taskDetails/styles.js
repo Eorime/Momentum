@@ -122,6 +122,7 @@ export const Avatar = styled.img`
 
 export const EmployeeWrapper = styled.div`
 	display: flex;
+	align-items: center;
 `;
 
 export const EmployeeDepartment = styled.span`

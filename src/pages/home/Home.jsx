@@ -22,7 +22,7 @@ const TaskWrapper = styled.div`
 	border-radius: 15px;
 	background-color: white;
 	overflow: hidden;
-	margin-bottom: 16px;
+	margin-bottom: 30px;
 	cursor: pointer;
 	transition: 0.2s all ease-in-out;
 

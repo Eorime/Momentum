@@ -27,13 +27,12 @@ export const TaskBoard = styled.div`
 export const TasksContainer = styled.div`
 	display: flex;
 	flex-direction: column;
-	gap: 30px;
 `;
 
 export const StatusColumn = styled.div`
 	display: flex;
 	flex-direction: column;
-	gap: 16px;
+	gap: 30px;
 `;
 
 export const ColumnHeader = styled.div`

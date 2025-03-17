@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Container = styled.div`
 	position: relative;
-	width: 380px;
+	max-width: 380px;
 	display: flex;
 	gap: 28px;
 	padding: 20px;
@@ -25,12 +25,15 @@ export const TaskTitle = styled.h1`
 	font-family: "Firago";
 	font-size: 15px;
 	font-weight: 500;
+	margin: 0;
+	margin-bottom: 12px;
 `;
 
 export const TaskDescription = styled.p`
 	font-family: "Firago";
 	font-size: 14px;
 	font-weight: 300;
+	margin: 0;
 `;
 
 export const EmployeeContainer = styled.div`
