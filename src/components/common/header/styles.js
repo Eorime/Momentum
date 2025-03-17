@@ -37,8 +37,6 @@ export const NewEmployeeButton = styled.button`
 	cursor: pointer;
 
 	&:hover {
-		// background-color: #8338ec;
-		// color: #ffffff;
 		border: 1px solid #b588f4;
 	}
 `;

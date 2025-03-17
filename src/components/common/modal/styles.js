@@ -105,6 +105,8 @@ export const Validation = styled.span`
 export const ButtonWrapper = styled.div`
 	display: flex;
 	gap: 22px;
+	position: relative;
+	left: 59%;
 `;
 
 export const AvatarInputWrapper = styled.div`
@@ -119,6 +121,7 @@ export const AvatarInput = styled.div`
 	justify-content: center;
 	align-items: center;
 	cursor: pointer;
+	width: 111%;
 `;
 
 export const AvatarIconWrapper = styled.div`
@@ -141,7 +144,42 @@ export const AvatarIcon = styled.img`
 	height: 24px;
 `;
 
-export const SubmitButton = styled.button``;
+export const CancelButton = styled.button`
+	font-family: "Firago";
+	font-weight: 300;
+	font-size: 16px;
+	color: #343a40;
+	background-color: #ffffff;
+	border: 1px solid #8338ec;
+	border-radius: 5px;
+	font-size: 16px;
+	padding: 11px 16px;
+	transition: 0.3s all ease-in-out;
+	cursor: pointer;
+
+	&:hover {
+		border: 1px solid #b588f4;
+	}
+`;
+
+export const SubmitButton = styled.button`
+	color: #ffffff;
+	background-color: #8338ec;
+	border: 1px solid #8338ec;
+	border-radius: 5px;
+	font-size: 16px;
+	padding: 10px 20px;
+	font-family: "Firago";
+	font-weight: 300;
+	transition: 0.3s all ease-in-out;
+	cursor: pointer;
+
+	&:hover {
+		background-color: #b588f4;
+		border: 1px solid #b588f4;
+		color: #ffffff;
+	}
+`;
 
 export const AvatarPreview = styled.img`
 	width: 88px;

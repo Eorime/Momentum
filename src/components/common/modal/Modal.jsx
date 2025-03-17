@@ -7,6 +7,7 @@ import {
 	AvatarLabel,
 	AvatarPreview,
 	ButtonWrapper,
+	CancelButton,
 	Container,
 	FormContainer,
 	Input,
@@ -301,6 +302,7 @@ const Modal = ({ onClose }) => {
 						/>
 					</InputWrapper>
 					<ButtonWrapper>
+						<CancelButton onClick={handleSvgClick}>გაუქმება</CancelButton>
 						<SubmitButton onClick={handleSubmit}>
 							დაამატე თანამშრომელი
 						</SubmitButton>
