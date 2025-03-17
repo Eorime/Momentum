@@ -3,7 +3,17 @@ import {
 	ASideContainer,
 	BSideContainer,
 	Container,
+	DeadlineContainer,
+	DepartmentWrapper,
 	DetailsContainer,
+	DetailsLabel,
+	DetailsTitle,
+	EmployeeContainer,
+	Icon,
+	IconTitleWrapper,
+	PriorityContainer,
+	PriorityIcon,
+	StatusContainer,
 	TaskContainer,
 	TaskDescription,
 	TaskInfo,
@@ -13,6 +23,9 @@ import {
 import Header from "../../components/common/header/Header";
 import { useParams, useNavigate } from "react-router-dom";
 import apiService from "../../services/api";
+import statusIcon from "../../assets/icons/pie-chart.svg";
+import employeeIcon from "../../assets/icons/employee.svg";
+import calendarIcon from "../../assets/icons/calendar.svg";
 
 const TaskDetails = () => {
 	const { id } = useParams();
@@ -65,31 +78,49 @@ const TaskDetails = () => {
 		fetchTaskDetails();
 	}, [id]);
 
-	const getStatusColor = (statusName) => {
-		return statusColorMap[statusName] || statusColorMap.default;
-	};
-
 	return (
 		<Container>
 			<Header />
 			<TaskContainer>
 				{!loading && !error && task && (
 					<ASideContainer>
-						<TaskInfo>{task.priority?.name}</TaskInfo>
-						<TaskInfo>{task?.department.name}</TaskInfo>
+						<DepartmentWrapper>
+							<PriorityContainer>
+								<PriorityIcon src={task.priority.icon} />
+								<TaskInfo>{task.priority?.name}</TaskInfo>
+							</PriorityContainer>
+							<TaskInfo>{task?.department.name}</TaskInfo>
+						</DepartmentWrapper>
 						<TextContainer>
 							<TaskTitle>{task?.name}</TaskTitle>
 							<TaskDescription>{task.description}</TaskDescription>
 						</TextContainer>
 						<DetailsContainer>
-							<TaskInfo>{task.status?.name}</TaskInfo>
-
-							<TaskInfo>
-								{task.employee?.name} {""}
-								{task.employee?.surname}
-							</TaskInfo>
-
-							<TaskInfo>{formattedDate}</TaskInfo>
+							<DetailsTitle>დავალების დეტალები</DetailsTitle>
+							<StatusContainer>
+								<IconTitleWrapper>
+									<Icon src={statusIcon} />
+									<DetailsLabel>სტატუსი</DetailsLabel>
+								</IconTitleWrapper>
+								<TaskInfo>{task?.status.name}</TaskInfo>
+							</StatusContainer>
+							<EmployeeContainer>
+								<IconTitleWrapper>
+									<Icon src={employeeIcon} />
+									<DetailsLabel>თანამშრომელი</DetailsLabel>
+								</IconTitleWrapper>
+								<TaskInfo>
+									{task.employee?.name} {""}
+									{task.employee?.surname}
+								</TaskInfo>
+							</EmployeeContainer>
+							<DeadlineContainer>
+								<IconTitleWrapper>
+									<Icon src={calendarIcon} />{" "}
+									<DetailsLabel>დავალების ვადა</DetailsLabel>
+								</IconTitleWrapper>
+								<TaskInfo>{formattedDate}</TaskInfo>
+							</DeadlineContainer>
 						</DetailsContainer>
 					</ASideContainer>
 				)}

@@ -8,12 +8,15 @@ export const Container = styled.div`
 	padding: 20px;
 	flex-direction: column;
 	color: #212529;
+	height: 217px;
+	justify-content: space-between;
 `;
 
 export const FiltersContainer = styled.div`
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
+	align-items: center;
 `;
 
 export const TextContainer = styled.div``;

@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Container = styled.div``;
 
 export const TaskContainer = styled.div`
-	margin-top: 10px;
+	margin-top: 30px;
 	background-color: white;
 	padding: 120px;
 	display: flex;
@@ -42,13 +42,71 @@ export const TaskDescription = styled.p`
 	margin-top: 26px;
 `;
 
+export const TaskInfo = styled.div``;
+
+export const DepartmentWrapper = styled.div`
+	display: flex;
+	gap: 18px;
+	margin-bottom: 12px;
+	align-items: center;
+`;
+
+export const PriorityIcon = styled.img`
+	width: 16px;
+`;
+
+export const PriorityContainer = styled.div`
+	padding: 5px;
+	display: flex;
+	gap: 4px;
+`;
+
 export const DetailsContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	gap: 10px;
     color #2A2A2A;
+	width: 500px;
+	margin-top: 63px;
 `;
 
-export const DetailsTitle = styled.h1``;
+export const DetailsTitle = styled.h1`
+	font-family: "Firago";
+	font-weight: 500;
+	font-size: 24px;
+	color: #2a2a2a;
+`;
 
-export const TaskInfo = styled.div``;
+export const StatusContainer = styled.div`
+	display: flex;
+	justify-content: space-between;
+`;
+
+export const EmployeeContainer = styled.div`
+	display: flex;
+	gap: 70px;
+`;
+
+export const DeadlineContainer = styled.div`
+	display: flex;
+	gap: 70px;
+`;
+
+export const IconTitleWrapper = styled.div`
+	display: flex;
+	gap: 10px;
+	align-items: center;
+	margin-bottom: 23px;
+`;
+
+export const DetailsLabel = styled.span`
+	font-family: "Firago";
+	font-weight: 400;
+	font-size: 16px;
+	color: #474747;
+`;
+
+export const Icon = styled.img`
+	width: 24px;
+	height: 24px;
+`;
