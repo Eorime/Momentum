@@ -10,7 +10,7 @@ const api = axios.create({
 api.interceptors.request.use(
 	(config) => {
 		const token =
-			localStorage.getItem("token") || "9e71e1f6-b8cb-4a84-9cfb-fd16188db038";
+			localStorage.getItem("token") || "9e685e02-64d7-4ca9-8294-ef39afed22da";
 
 		config.headers.Authorization = `Bearer ${token}`;
 
@@ -31,7 +31,13 @@ export const apiService = {
 
 	//employees
 	getEmployees: () => api.get("/employees"),
-	createEmployee: (employeeData) => api.post("/employees", employeeData),
+	createEmployee: (employeeData) => {
+		return api.post("/employees", employeeData, {
+			headers: {
+				"Content-Type": undefined,
+			},
+		});
+	},
 
 	//comments
 	getComments: (id) => api.get(`/tasks/${id}/comments`),

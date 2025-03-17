@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
 import {
+	AvatarIcon,
+	AvatarIconWrapper,
+	AvatarInput,
+	AvatarInputWrapper,
+	AvatarLabel,
+	AvatarPreview,
+	ButtonWrapper,
 	Container,
 	FormContainer,
 	Input,
@@ -7,6 +14,7 @@ import {
 	InputWrapper,
 	ModalContainer,
 	ModalName,
+	SubmitButton,
 	SVGWrapper,
 	TopSideWrapper,
 	Validation,
@@ -14,6 +22,7 @@ import {
 } from "./styles";
 import DropDown from "../dropdown/DropDown";
 import apiService from "../../../services/api";
+import gallery from "../../../assets/icons/gallery.svg";
 
 const Modal = ({ onClose }) => {
 	const [employeeFormData, setEmployeeFormData] = useState({
@@ -24,6 +33,8 @@ const Modal = ({ onClose }) => {
 	});
 	const [departments, setDepartments] = useState([]);
 	const [selectedDepartment, setSelectedDepartment] = useState(null);
+	const [fileName, setFileName] = useState("");
+	const [imagePreview, setImagePreview] = useState(null);
 
 	const [validations, setValidations] = useState({
 		nameMinLength: null,
@@ -72,6 +83,7 @@ const Modal = ({ onClose }) => {
 			...employeeFormData,
 			department: department.id,
 		});
+		console.log(department.id);
 	};
 
 	const handleInputChange = (e) => {
@@ -80,6 +92,39 @@ const Modal = ({ onClose }) => {
 			...employeeFormData,
 			[name]: value,
 		});
+	};
+
+	const handleFileChange = (event) => {
+		const file = event.target.files[0];
+
+		if (file) {
+			//check format
+			if (!file.type.match("image.*")) {
+				setFileName("ატვირთე ფოტო");
+				setImagePreview(null);
+				return;
+			}
+
+			//check size
+			if (file.size > 600 * 1024) {
+				setFileName("ატვირთე ფოტო");
+				setImagePreview(null);
+				return;
+			}
+
+			//update the filename
+			setFileName(file.name);
+
+			//url for preview
+			const previewUrl = URL.createObjectURL(file);
+			setImagePreview(previewUrl);
+
+			//store the file itself
+			setEmployeeFormData({
+				...employeeFormData,
+				avatar: file,
+			});
+		}
 	};
 
 	const handleContainerClick = (e) => {
@@ -92,6 +137,27 @@ const Modal = ({ onClose }) => {
 		onClose();
 	};
 
+	const handleSubmit = async () => {
+		try {
+			//form data object for file upload
+			const formData = new FormData();
+			formData.append("name", employeeFormData.name);
+			formData.append("surname", employeeFormData.surname);
+			formData.append("department_id", employeeFormData.department);
+
+			// append file if it exists
+			if (employeeFormData.avatar instanceof File) {
+				formData.append("avatar", employeeFormData.avatar);
+			}
+
+			//send data
+			const response = await apiService.createEmployee(formData);
+
+			onClose();
+		} catch (error) {
+			console.error("error creating employee:", error);
+		}
+	};
 	return (
 		<Container onClick={handleContainerClick}>
 			<ModalContainer>
@@ -201,7 +267,29 @@ const Modal = ({ onClose }) => {
 					</TopSideWrapper>
 					<InputWrapper>
 						<InputLabel>ავატარი*</InputLabel>
-						<Input />
+						<AvatarInputWrapper>
+							<AvatarInput
+								onClick={() => document.getElementById("avatarInput").click()}
+							>
+								<AvatarIconWrapper>
+									{!imagePreview ? (
+										<>
+											<AvatarIcon src={gallery} />
+											<AvatarLabel>ატვირთე ფოტო</AvatarLabel>
+										</>
+									) : (
+										<AvatarPreview src={imagePreview} alt="Preview" />
+									)}
+								</AvatarIconWrapper>
+							</AvatarInput>
+							<input
+								id="avatarInput"
+								type="file"
+								accept="image/*"
+								onChange={handleFileChange}
+								style={{ display: "none" }}
+							/>
+						</AvatarInputWrapper>
 					</InputWrapper>
 					<InputWrapper>
 						<InputLabel>დეპარტამენტი*</InputLabel>
@@ -212,6 +300,11 @@ const Modal = ({ onClose }) => {
 							value={selectedDepartment}
 						/>
 					</InputWrapper>
+					<ButtonWrapper>
+						<SubmitButton onClick={handleSubmit}>
+							დაამატე თანამშრომელი
+						</SubmitButton>
+					</ButtonWrapper>
 				</FormContainer>
 			</ModalContainer>
 		</Container>

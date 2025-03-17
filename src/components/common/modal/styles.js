@@ -73,7 +73,6 @@ export const InputWrapper = styled.div`
 `;
 
 export const Input = styled.input`
-	width: 384px;
 	padding: 14px;
 	background-color: #ffffff;
 	outline: none;
@@ -106,4 +105,47 @@ export const Validation = styled.span`
 export const ButtonWrapper = styled.div`
 	display: flex;
 	gap: 22px;
+`;
+
+export const AvatarInputWrapper = styled.div`
+	width: 813px;
+`;
+
+export const AvatarInput = styled.div`
+	height: 120px;
+	border: 1px dashed #ced4da;
+	border-radius: 8px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+`;
+
+export const AvatarIconWrapper = styled.div`
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 7px;
+`;
+
+export const AvatarLabel = styled.span`
+	color: #343a40;
+	font-family: "Firago";
+	font-weight: 500;
+	font-size: 14px;
+`;
+
+export const AvatarIcon = styled.img`
+	width: 24px;
+	height: 24px;
+`;
+
+export const SubmitButton = styled.button``;
+
+export const AvatarPreview = styled.img`
+	width: 88px;
+	height: 88px;
+	border-radius: 50%;
+	object-fit: cover;
 `;
