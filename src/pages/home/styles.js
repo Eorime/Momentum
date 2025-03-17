@@ -26,7 +26,7 @@ export const TaskBoard = styled.div`
 
 export const TasksContainer = styled.div`
 	display: flex;
-	flexdirection: column;
+	flex-direction: column;
 	gap: 30px;
 `;
 
@@ -53,5 +53,4 @@ export const NoTasks = styled.div`
 	border: 1px solid #e5e5e5;
 	text-align: center;
 	color: #888;
-	width: 100%;
 `;

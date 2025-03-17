@@ -54,12 +54,20 @@ const Task = ({ task }) => {
 					<PriorityIcon src={task.priority.icon} />
 					<PriorityLabel>{task.priority.name}</PriorityLabel>
 				</PriorityWrapper>
-				<Department>{task.department.name}</Department>
+				<Department>
+					{task.department.name.length > 10
+						? `${task.department.name.substring(0, 10)}...`
+						: task.department.name}
+				</Department>
 				<DueDate>{formattedDate}</DueDate>
 			</FiltersContainer>
 			<TextContainer>
 				<TaskTitle>{task.name}</TaskTitle>
-				<TaskDescription>{task.description}</TaskDescription>
+				<TaskDescription>
+					{task.description.length > 100
+						? `${task.description.substring(0, 100)}...`
+						: task.description}
+				</TaskDescription>
 			</TextContainer>
 			<EmployeeContainer>
 				<EmployeeAvatar src={task.employee.avatar} />

@@ -24,6 +24,12 @@ const TaskWrapper = styled.div`
 	overflow: hidden;
 	margin-bottom: 16px;
 	cursor: pointer;
+	transition: 0.2s all ease-in-out;
+
+	&:hover {
+		border: 1px solid
+			${(props) => (props.borderColor ? `${props.borderColor}6D` : "")};
+	}
 `;
 
 const Home = () => {

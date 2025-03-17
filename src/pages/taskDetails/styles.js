@@ -80,11 +80,13 @@ export const DetailsTitle = styled.h1`
 export const StatusContainer = styled.div`
 	display: flex;
 	justify-content: space-between;
+	margin-bottom: 24px;
 `;
 
 export const EmployeeContainer = styled.div`
 	display: flex;
 	gap: 70px;
+	margin-bottom: 24px;
 `;
 
 export const DeadlineContainer = styled.div`
@@ -96,7 +98,6 @@ export const IconTitleWrapper = styled.div`
 	display: flex;
 	gap: 10px;
 	align-items: center;
-	margin-bottom: 23px;
 `;
 
 export const DetailsLabel = styled.span`
@@ -109,4 +110,27 @@ export const DetailsLabel = styled.span`
 export const Icon = styled.img`
 	width: 24px;
 	height: 24px;
+`;
+
+export const Avatar = styled.img`
+	width: 32px;
+	height: 32px;
+	border-radius: 50%;
+	margin-right: 12px;
+	object-fit: cover;
+`;
+
+export const EmployeeWrapper = styled.div`
+	display: flex;
+`;
+
+export const EmployeeDepartment = styled.span`
+	font-family: "Firago";
+	font-size: 11px;
+	font-weight: 200;
+	color: #474747;
+`;
+
+export const DropDownWrapper = styled.div`
+	width: 270px;
 `;

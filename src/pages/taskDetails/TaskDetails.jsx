@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {
 	ASideContainer,
+	Avatar,
 	BSideContainer,
 	Container,
 	DeadlineContainer,
@@ -8,7 +9,10 @@ import {
 	DetailsContainer,
 	DetailsLabel,
 	DetailsTitle,
+	DropDownWrapper,
 	EmployeeContainer,
+	EmployeeDepartment,
+	EmployeeWrapper,
 	Icon,
 	IconTitleWrapper,
 	PriorityContainer,
@@ -21,23 +25,28 @@ import {
 	TextContainer,
 } from "./styles";
 import Header from "../../components/common/header/Header";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import apiService from "../../services/api";
 import statusIcon from "../../assets/icons/pie-chart.svg";
 import employeeIcon from "../../assets/icons/employee.svg";
 import calendarIcon from "../../assets/icons/calendar.svg";
+import DropDown from "../../components/common/dropdown/DropDown";
 
 const TaskDetails = () => {
 	const { id } = useParams();
 	const [task, setTask] = useState(null);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
+	const [statuses, setStatuses] = useState([]);
+	const [selectedStatus, setSelectedStatus] = useState(null);
+	const [updating, setUpdating] = useState(false);
 
 	const formatDateGeorgian = (isoDateString) => {
+		if (!isoDateString) return "";
+
 		const date = new Date(isoDateString);
 
 		const day = date.getDate();
-
 		const year = date.getFullYear();
 
 		const georgianMonths = [
@@ -60,23 +69,52 @@ const TaskDetails = () => {
 		return `${day} ${monthAbbr}, ${year}`;
 	};
 
-	const formattedDate = formatDateGeorgian(task?.due_date);
-
 	useEffect(() => {
 		const fetchTaskDetails = async () => {
 			try {
 				setLoading(true);
 				const response = await apiService.getTaskById(id);
 				setTask(response.data);
+				setSelectedStatus(response.data.status);
 			} catch (error) {
 				console.log("error", error);
+				setError(error);
 			} finally {
 				setLoading(false);
 			}
 		};
 
+		const fetchStatuses = async () => {
+			try {
+				const response = await apiService.getStatuses();
+				setStatuses(response.data);
+			} catch (error) {
+				console.log("error fetching statuses", error);
+			}
+		};
+
 		fetchTaskDetails();
+		fetchStatuses();
 	}, [id]);
+
+	const handleStatusChange = async (newStatus) => {
+		try {
+			setUpdating(true);
+
+			const updatedTask = { ...task };
+
+			updatedTask.status = newStatus;
+
+			await apiService.changeTaskStatus(id, { status_id: newStatus.id });
+
+			setSelectedStatus(newStatus);
+			setTask(updatedTask);
+		} catch (error) {
+			console.log("error updating status", error);
+		} finally {
+			setUpdating(false);
+		}
+	};
 
 	return (
 		<Container>
@@ -102,24 +140,41 @@ const TaskDetails = () => {
 									<Icon src={statusIcon} />
 									<DetailsLabel>სტატუსი</DetailsLabel>
 								</IconTitleWrapper>
-								<TaskInfo>{task?.status.name}</TaskInfo>
+								{task.status && (
+									<DropDownWrapper>
+										<DropDown
+											options={statuses}
+											value={selectedStatus}
+											onSelect={handleStatusChange}
+											disabled={updating}
+											placeholder="აირჩიეთ სტატუსი"
+										/>
+									</DropDownWrapper>
+								)}
 							</StatusContainer>
 							<EmployeeContainer>
 								<IconTitleWrapper>
 									<Icon src={employeeIcon} />
 									<DetailsLabel>თანამშრომელი</DetailsLabel>
 								</IconTitleWrapper>
-								<TaskInfo>
-									{task.employee?.name} {""}
-									{task.employee?.surname}
-								</TaskInfo>
+								<EmployeeWrapper>
+									<Avatar src={task.employee?.avatar} />
+									<div style={{ display: "flex", flexDirection: "column" }}>
+										<EmployeeDepartment>
+											{task?.department.name}
+										</EmployeeDepartment>
+										<TaskInfo>
+											{task.employee?.name} {""} {task.employee?.surname}
+										</TaskInfo>
+									</div>
+								</EmployeeWrapper>
 							</EmployeeContainer>
 							<DeadlineContainer>
 								<IconTitleWrapper>
 									<Icon src={calendarIcon} />{" "}
 									<DetailsLabel>დავალების ვადა</DetailsLabel>
 								</IconTitleWrapper>
-								<TaskInfo>{formattedDate}</TaskInfo>
+								<TaskInfo>{formatDateGeorgian(task?.due_date)}</TaskInfo>
 							</DeadlineContainer>
 						</DetailsContainer>
 					</ASideContainer>
