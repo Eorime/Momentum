@@ -1,19 +1,93 @@
-import React, { useState } from "react";
-import { Container, ModalContainer, SVGWrapper } from "./styles";
+import React, { useState, useEffect } from "react";
+import {
+	Container,
+	FormContainer,
+	Input,
+	InputLabel,
+	InputWrapper,
+	ModalContainer,
+	ModalName,
+	SVGWrapper,
+	TopSideWrapper,
+	Validation,
+	ValidationsWrapper,
+} from "./styles";
+import DropDown from "../dropdown/DropDown";
+import apiService from "../../../services/api";
 
 const Modal = ({ onClose }) => {
-	const [employeeFormData, setemployeeFormData] = useState({
+	const [employeeFormData, setEmployeeFormData] = useState({
 		name: "",
 		surname: "",
 		avatar: "",
 		department: "",
 	});
+	const [departments, setDepartments] = useState([]);
+	const [selectedDepartment, setSelectedDepartment] = useState(null);
+
+	const [validations, setValidations] = useState({
+		nameMinLength: null,
+		nameMaxLength: null,
+		nameCharacters: null,
+		surnameMinLength: null,
+		surnameMaxLength: null,
+		surnameCharacters: null,
+	});
+
+	const hasOnlyGeorgianAndEnglish = (text) => {
+		const pattern = /^[\u10A0-\u10FF a-zA-Z]+$/;
+		return pattern.test(text);
+	};
+
+	useEffect(() => {
+		const { name, surname } = employeeFormData;
+
+		setValidations({
+			nameMinLength: name === "" ? null : name.length >= 2,
+			nameMaxLength: name === "" ? null : name.length <= 255,
+			nameCharacters: name === "" ? null : hasOnlyGeorgianAndEnglish(name),
+
+			surnameMinLength: surname === "" ? null : surname.length >= 2,
+			surnameMaxLength: surname === "" ? null : surname.length <= 255,
+			surnameCharacters:
+				surname === "" ? null : hasOnlyGeorgianAndEnglish(surname),
+		});
+	}, [employeeFormData]);
+
+	useEffect(() => {
+		const fetchDepartments = async () => {
+			try {
+				const response = await apiService.getDepartments();
+				setDepartments(response);
+			} catch (error) {
+				console.log("couldnt fetch", error);
+			}
+		};
+		fetchDepartments();
+	}, []);
+
+	const handleDepartmentSelect = (department) => {
+		setSelectedDepartment(department);
+		setEmployeeFormData({
+			...employeeFormData,
+			department: department.id,
+		});
+	};
+
+	const handleInputChange = (e) => {
+		const { name, value } = e.target;
+		setEmployeeFormData({
+			...employeeFormData,
+			[name]: value,
+		});
+	};
 
 	const handleContainerClick = (e) => {
 		if (e.target === e.currentTarget) {
 			onClose();
 		}
 	};
+
 	const handleSvgClick = () => {
 		onClose();
 	};
@@ -35,6 +109,110 @@ const Modal = ({ onClose }) => {
 						/>
 					</svg>
 				</SVGWrapper>
+				<ModalName>თანამშრომლის დამატება</ModalName>
+				<FormContainer>
+					<TopSideWrapper>
+						<InputWrapper>
+							<InputLabel>სახელი*</InputLabel>
+							<Input
+								name="name"
+								value={employeeFormData.name}
+								onChange={handleInputChange}
+							/>
+							<ValidationsWrapper>
+								<Validation
+									status={
+										validations.nameMinLength === null
+											? "default"
+											: validations.nameMinLength
+											? "valid"
+											: "invalid"
+									}
+								>
+									მინიმუმ 2 სიმბოლო
+								</Validation>
+								<Validation
+									status={
+										validations.nameMaxLength === null
+											? "default"
+											: validations.nameMaxLength
+											? "valid"
+											: "invalid"
+									}
+								>
+									მაქსიმუმ 255 სიმბოლო
+								</Validation>
+								<Validation
+									status={
+										validations.nameCharacters === null
+											? "default"
+											: validations.nameCharacters
+											? "valid"
+											: "invalid"
+									}
+								>
+									მარტო ლათინური და ქართული სიმბოლოები
+								</Validation>
+							</ValidationsWrapper>
+						</InputWrapper>
+						<InputWrapper>
+							<InputLabel>გვარი*</InputLabel>
+							<Input
+								name="surname"
+								value={employeeFormData.surname}
+								onChange={handleInputChange}
+							/>
+							<ValidationsWrapper>
+								<Validation
+									status={
+										validations.surnameMinLength === null
+											? "default"
+											: validations.surnameMinLength
+											? "valid"
+											: "invalid"
+									}
+								>
+									მინიმუმ 2 სიმბოლო
+								</Validation>
+								<Validation
+									status={
+										validations.surnameMaxLength === null
+											? "default"
+											: validations.surnameMaxLength
+											? "valid"
+											: "invalid"
+									}
+								>
+									მაქსიმუმ 255 სიმბოლო
+								</Validation>
+								<Validation
+									status={
+										validations.surnameCharacters === null
+											? "default"
+											: validations.surnameCharacters
+											? "valid"
+											: "invalid"
+									}
+								>
+									მარტო ლათინური და ქართული სიმბოლოები
+								</Validation>
+							</ValidationsWrapper>
+						</InputWrapper>
+					</TopSideWrapper>
+					<InputWrapper>
+						<InputLabel>ავატარი*</InputLabel>
+						<Input />
+					</InputWrapper>
+					<InputWrapper>
+						<InputLabel>დეპარტამენტი*</InputLabel>
+						<DropDown
+							style="width: 384px; padding: 14px; background-color: #ffffff; outline: none; box-shadow: none; border: 1px solid #ced4da; font-size: 14px; font-family: 'Firago'; font-weight: 200; border-radius: 6px; color: #0d0f10;"
+							options={departments.data}
+							onSelect={handleDepartmentSelect}
+							value={selectedDepartment}
+						/>
+					</InputWrapper>
+				</FormContainer>
 			</ModalContainer>
 		</Container>
 	);
