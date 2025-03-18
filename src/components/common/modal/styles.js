@@ -14,7 +14,7 @@ export const ModalContainer = styled.div`
 	position: relative;
 	max-width: 913px;
 	max-height: 766px;
-	top: 50%;
+	top: 55%;
 	left: 50%;
 	transform: translate(-50%, -65%);
 	background-color: white;
@@ -166,6 +166,7 @@ export const SubmitButton = styled.button`
 	color: #ffffff;
 	background-color: #8338ec;
 	border: 1px solid #8338ec;
+	opacity: ${({ invalid }) => (invalid ? 0.5 : 1)};
 	border-radius: 5px;
 	font-size: 16px;
 	padding: 10px 20px;
@@ -173,10 +174,15 @@ export const SubmitButton = styled.button`
 	font-weight: 300;
 	transition: 0.3s all ease-in-out;
 	cursor: pointer;
+	cursor: ${({ invalid }) => (invalid ? "default" : "pointer")};
 
 	&:hover {
-		background-color: #b588f4;
-		border: 1px solid #b588f4;
+		${({ invalid }) =>
+			!invalid &&
+			`
+      background-color: #b588f4;
+      border: 1px solid #b588f4;
+    `}
 		color: #ffffff;
 	}
 `;

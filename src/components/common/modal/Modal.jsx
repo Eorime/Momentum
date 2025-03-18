@@ -160,6 +160,25 @@ const Modal = ({ onClose }) => {
 			console.error("error creating employee:", error);
 		}
 	};
+
+	const isFormValid = () => {
+		const validName =
+			validations.nameMinLength &&
+			validations.nameMaxLength &&
+			validations.nameCharacters;
+		const validSurname =
+			validations.surnameMinLength &&
+			validations.surnameMaxLength &&
+			validations.surnameCharacters;
+
+		const fieldsFilled =
+			employeeFormData.name.trim() !== "" &&
+			employeeFormData.surname.trim() !== "" &&
+			employeeFormData.department !== "" &&
+			imagePreview !== null;
+
+		return validName && validSurname && fieldsFilled;
+	};
 	return (
 		<Container onClick={handleContainerClick}>
 			<ModalContainer>
@@ -365,7 +384,7 @@ const Modal = ({ onClose }) => {
 					</InputWrapper>
 					<ButtonWrapper>
 						<CancelButton onClick={handleSvgClick}>გაუქმება</CancelButton>
-						<SubmitButton onClick={handleSubmit}>
+						<SubmitButton onClick={handleSubmit} invalid={!isFormValid()}>
 							დაამატე თანამშრომელი
 						</SubmitButton>
 					</ButtonWrapper>

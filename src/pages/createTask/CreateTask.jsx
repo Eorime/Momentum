@@ -27,10 +27,21 @@ import { useNavigate } from "react-router-dom";
 const CreateTask = () => {
 	const navigate = useNavigate();
 
+	const getTomorrowDate = () => {
+		const tomorrow = new Date();
+		tomorrow.setDate(tomorrow.getDate() + 1);
+		return tomorrow.toISOString().split("T")[0];
+	};
+
+	const getTodayDate = () => {
+		const today = new Date();
+		return today.toISOString().split("T")[0];
+	};
+
 	const [formData, setFormData] = useState({
 		name: "",
 		description: "",
-		due_date: "",
+		due_date: getTomorrowDate(),
 		department: null,
 		employee: null,
 		priority: null,
@@ -152,6 +163,11 @@ const CreateTask = () => {
 			if (parsedData.status) {
 				setSelected((prev) => ({ ...prev, status: parsedData.status }));
 			}
+		} else {
+			setFormData((prev) => ({
+				...prev,
+				due_date: getTomorrowDate(),
+			}));
 		}
 	};
 
@@ -280,6 +296,17 @@ const CreateTask = () => {
 		} catch (error) {
 			console.error("error creating task:", error);
 		}
+	};
+
+	const getPlaceholder = (array, index) => {
+		if (array && array.length > index) {
+			return array[index];
+		}
+		return null;
+	};
+
+	const dateInputStyle = {
+		defaultValue: getTomorrowDate(),
 	};
 
 	return (
@@ -416,8 +443,11 @@ const CreateTask = () => {
 							<DateInput
 								type="date"
 								name="due_date"
-								value={formData.due_date}
+								value={formData.due_date || getTomorrowDate()}
 								onChange={handleDateChange}
+								min={getTodayDate()}
+								defaultValue={getTomorrowDate()}
+								required
 							/>
 						</DateInputWrapper>
 						<SubmitButton onClick={handleSubmit} disabled={!isFormValid}>
