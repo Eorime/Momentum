@@ -60,7 +60,7 @@ export const InputLabel = styled.label`
 	font-weight: 400;
 	color: #343a40;
 	margin-bottom: 6px;
-	opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
+	opacity: ${({ disabled }) => (disabled ? 0 : 1)};
 `;
 
 export const Input = styled.input`

@@ -5,7 +5,7 @@ import { FilterArrow } from "../../pages/home/filter/styles";
 const DropdownContainer = styled.div`
 	position: relative;
 	width: 100%;
-	opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
+	opacity: ${({ disabled }) => (disabled ? 0 : 1)};
 `;
 
 const DropdownHeader = styled.div`

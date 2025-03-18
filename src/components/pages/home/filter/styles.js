@@ -60,7 +60,6 @@ export const FilterOptions = styled.div`
 	gap: 22px;
 	background-color: #ffffff;
 	height: auto;
-	height: auto;
 	max-height: 280px;
 	padding-left: 30px;
 	padding-top: 40px;

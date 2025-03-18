@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Container = styled.div`
 	display: flex;
 	flex-direction: column;
-	gap: 60px;
+	padding: 18px 20px 15px 20px;
 `;
 
 export const CommentAreaWrapper = styled.div`
@@ -14,6 +14,7 @@ export const CommentAreaWrapper = styled.div`
 	display: flex;
 	padding: 18px 20px 15px 20px;
 	position: relative;
+	margin-bottom: 60px;
 `;
 
 export const CommentArea = styled.textarea`
@@ -49,10 +50,29 @@ export const CommentButton = styled.button`
 	}
 `;
 
+export const CommentCountWrapper = styled.div`
+	display: flex;
+	margin-bottom: 40px;
+	gap: 7px;
+`;
+
+export const CommentCountLabel = styled.span`
+	font-size: 20px;
+	font-family: "Firago";
+	font-weight: 500;
+	color: #000000;
+`;
+
+export const CommentCountNumber = styled.div``;
+
 export const AllComments = styled.div``;
 
 export const OneComment = styled.div`
 	color: #343a40;
+	width: 80px;
+	display: flex;
+	align-items: flex-start;
+	margin-bottom: 10px;
 `;
 
 export const AuthorName = styled.span`
@@ -73,6 +93,10 @@ export const CommenterAvatar = styled.img`
 export const CommentText = styled.p`
 	margin-top: 8px;
 	margin-bottom: 10px;
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+	max-width: 100%;
+	width: 100%;
 `;
 
 export const CancelSubComment = styled.button`
@@ -83,6 +107,12 @@ export const CancelSubComment = styled.button`
 	font-family: "Firago";
 	font-weight: 200;
 	bottom: 20px;
+	cursor: pointer;
+	transition: 0.2s all ease-in-out;
+
+	&:hover {
+		color: #b588f4;
+	}
 `;
 
 export const ReplyButton = styled.button`
@@ -94,4 +124,10 @@ export const ReplyButton = styled.button`
 	cursor: pointer;
 	padding: 0;
 	font-size: 12px;
+`;
+
+export const ReplyButtonWrapper = styled.div`
+	display: flex;
+	align-items: center;
+	gap: 6px;
 `;

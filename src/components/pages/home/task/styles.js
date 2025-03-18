@@ -8,7 +8,7 @@ export const Container = styled.div`
 	padding: 20px;
 	flex-direction: column;
 	color: #212529;
-	height: 217px;
+	height: 180px;
 	justify-content: space-between;
 	overflow-y: auto; //in case if the NAME is too long
 `;

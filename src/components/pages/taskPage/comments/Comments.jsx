@@ -6,10 +6,14 @@ import {
 	CommentArea,
 	CommentAreaWrapper,
 	CommentButton,
+	CommentCountLabel,
+	CommentCountWrapper,
 	CommenterAvatar,
 	CommentText,
 	Container,
+	OneComment,
 	ReplyButton,
+	ReplyButtonWrapper,
 } from "./style";
 import apiService from "../../../../services/api";
 import { useParams } from "react-router-dom";
@@ -86,14 +90,17 @@ const Comments = () => {
 		setReplyToId(null);
 	};
 
+	//common styles for comment content
+	const commentContentStyle = {
+		flex: 1,
+		minWidth: 0, //text overflow handling
+	};
+
 	return (
 		<Container>
 			<CommentAreaWrapper>
 				{replyToId && (
-					<CancelSubComment
-						onClick={cancelReply}
-						style={{ marginLeft: "10px", cursor: "pointer" }}
-					>
+					<CancelSubComment onClick={cancelReply}>
 						პასუხის გაუქმება
 					</CancelSubComment>
 				)}
@@ -110,29 +117,51 @@ const Comments = () => {
 					დააკომენტარე
 				</CommentButton>
 			</CommentAreaWrapper>
+			<CommentCountWrapper>
+				<CommentCountLabel>კომენტარები</CommentCountLabel>
+			</CommentCountWrapper>
 			<AllComments>
 				{comments.map((comment) => (
 					<div key={comment.id} style={{ marginBottom: "20px" }}>
 						{/* parent */}
-						<div
-							style={{
-								display: "flex",
-								alignItems: "flex-start",
-								marginBottom: "10px",
-							}}
-						>
+						<OneComment style={{ width: "100%" }}>
 							<CommenterAvatar
 								src={comment.author_avatar}
 								alt={comment.author_nickname}
 							/>
-							<div>
+							<div style={commentContentStyle}>
 								<AuthorName>{comment.author_nickname}</AuthorName>
 								<CommentText>{comment.text}</CommentText>
-								<ReplyButton onClick={() => handleReply(comment.id)}>
-									უპასუხე
-								</ReplyButton>
+								<ReplyButtonWrapper>
+									<svg
+										width="16"
+										height="16"
+										viewBox="0 0 16 16"
+										fill="none"
+										xmlns="http://www.w3.org/2000/svg"
+									>
+										<g clipPath="url(#clip0_4246_2027)">
+											<path
+												d="M16.0007 13.9993H14.6673V11.9993C14.6673 8.66602 12.0007 5.99935 8.66732 5.99935H5.33398V4.66602H8.66732C12.734 4.66602 16.0007 7.93268 16.0007 11.9993V13.9993Z"
+												fill="#8338EC"
+											/>
+											<path
+												d="M2 5.33333L5.33333 8.66667V2L2 5.33333Z"
+												fill="#8338EC"
+											/>
+										</g>
+										<defs>
+											<clipPath id="clip0_4246_2027">
+												<rect width="16" height="16" fill="white" />
+											</clipPath>
+										</defs>
+									</svg>
+									<ReplyButton onClick={() => handleReply(comment.id)}>
+										უპასუხე
+									</ReplyButton>
+								</ReplyButtonWrapper>
 							</div>
-						</div>
+						</OneComment>
 						{comment.sub_comments && comment.sub_comments.length > 0 && (
 							<div style={{ marginLeft: "50px" }}>
 								{comment.sub_comments.map((subComment) => (
@@ -142,13 +171,14 @@ const Comments = () => {
 											display: "flex",
 											alignItems: "flex-start",
 											marginBottom: "10px",
+											width: "100%",
 										}}
 									>
 										<CommenterAvatar
 											src={subComment.author_avatar}
 											alt={subComment.author_nickname}
 										/>
-										<div>
+										<div style={commentContentStyle}>
 											<AuthorName>{subComment.author_nickname}</AuthorName>
 											<CommentText>{subComment.text}</CommentText>
 										</div>
