@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import {
+	ChosenFilter,
+	ChosenFiltersContainer,
 	ColumnHeader,
 	Container,
 	HomeContainer,
@@ -16,7 +18,6 @@ import Filter from "../../components/pages/home/filter/Filter";
 import Task from "../../components/pages/home/task/Task";
 import styled from "styled-components";
 
-//a styled task container component that takes border color as a prop
 const TaskWrapper = styled.div`
 	border: 1px solid ${(props) => props.borderColor};
 	border-radius: 15px;
@@ -34,6 +35,7 @@ const TaskWrapper = styled.div`
 
 const Home = () => {
 	const navigate = useNavigate();
+	const location = useLocation();
 	const [tasks, setTasks] = useState([]);
 	const [filteredTasks, setFilteredTasks] = useState([]);
 	const [statuses, setStatuses] = useState([]);
@@ -50,6 +52,28 @@ const Home = () => {
 		დასრულებული: "#3A86FF",
 		default: "#6c757d",
 	};
+
+	//load filters from local storage on mount
+	useEffect(() => {
+		const savedFilters = localStorage.getItem("appliedFilters");
+		if (savedFilters) {
+			setAppliedFilters(JSON.parse(savedFilters));
+		}
+
+		//clean up storage after moving to a diff page
+		return () => {
+			const isRefresh =
+				sessionStorage.getItem("currentPath") === location.pathname;
+			if (!isRefresh) {
+				localStorage.removeItem("appliedFilters");
+			}
+		};
+	}, [location.pathname]);
+
+	//current path setup
+	useEffect(() => {
+		sessionStorage.setItem("currentPath", location.pathname);
+	}, [location.pathname]);
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -74,6 +98,13 @@ const Home = () => {
 	useEffect(() => {
 		if (tasks.length > 0) {
 			applyFilters();
+		}
+
+		//save to local storage when filters change
+		if (Object.values(appliedFilters).some((filter) => filter.length > 0)) {
+			localStorage.setItem("appliedFilters", JSON.stringify(appliedFilters));
+		} else {
+			localStorage.removeItem("appliedFilters");
 		}
 	}, [appliedFilters, tasks]);
 
@@ -106,6 +137,7 @@ const Home = () => {
 	};
 
 	const handleFilterUpdate = (filters) => {
+		console.log("handleFilterUpdate called with:", filters);
 		setAppliedFilters(filters);
 	};
 
@@ -113,21 +145,17 @@ const Home = () => {
 		navigate(`/task/${taskId}`);
 	};
 
-	//get the color from the color map
 	const getStatusColor = (status) => {
 		return statusColorMap[status.name] || statusColorMap.default;
 	};
 
-	//group tasks by status id
 	const groupTasksByStatus = () => {
 		const grouped = {};
 
-		//groups for every status
 		statuses.forEach((status) => {
 			grouped[status.id] = [];
 		});
 
-		//put tasks into their groups
 		filteredTasks.forEach((task) => {
 			const statusId = task.status?.id;
 			if (statusId && grouped[statusId]) {
@@ -140,7 +168,6 @@ const Home = () => {
 		return grouped;
 	};
 
-	//memoize
 	const groupedTasks = React.useMemo(() => {
 		return statuses.length > 0 ? groupTasksByStatus() : {};
 	}, [filteredTasks, statuses]);
@@ -150,7 +177,21 @@ const Home = () => {
 			<Header />
 			<HomeContainer>
 				<HomeTitle>დავალებების გვერდი</HomeTitle>
-				<Filter updateSelectedFilters={handleFilterUpdate} />
+				<Filter
+					updateSelectedFilters={handleFilterUpdate}
+					initialFilters={appliedFilters}
+				/>
+				<ChosenFiltersContainer>
+					{Object.entries(appliedFilters).map(([filterType, filters]) =>
+						filters.map((filter) => (
+							<ChosenFilter key={`${filterType}-${filter.id}`}>
+								{filterType === "employees"
+									? `${filter.name} ${filter.surname}`
+									: filter.name}
+							</ChosenFilter>
+						))
+					)}
+				</ChosenFiltersContainer>
 				<TaskBoard>
 					{statuses.map((status) => (
 						<StatusColumn

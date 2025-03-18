@@ -53,3 +53,14 @@ export const NoTasks = styled.div`
 	text-align: center;
 	color: #888;
 `;
+
+export const ChosenFiltersContainer = styled.div`
+	background-color: red;
+	position: absolute;
+	width: 200px;
+	height: 30px;
+	margin-top: 25px;
+	margin-bottom: 25px;
+`;
+
+export const ChosenFilter = styled.div``;
