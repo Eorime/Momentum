@@ -3,8 +3,11 @@ import { useNavigate, useLocation } from "react-router-dom";
 import {
 	ChosenFilter,
 	ChosenFiltersContainer,
+	ClearAllButton,
+	CloseButton,
 	ColumnHeader,
 	Container,
+	FilterWithCloseButton,
 	HomeContainer,
 	HomeTitle,
 	NoTasks,
@@ -33,6 +36,11 @@ const TaskWrapper = styled.div`
 	}
 `;
 
+//localstorage key
+const FILTERS_STORAGE_KEY = "homePageAppliedFilters";
+//sessionstorage key
+const LAST_PATH_KEY = "lastViewedPath";
+
 const Home = () => {
 	const navigate = useNavigate();
 	const location = useLocation();
@@ -53,26 +61,59 @@ const Home = () => {
 		default: "#6c757d",
 	};
 
-	//load filters from local storage on mount
+	//check if its refresh
 	useEffect(() => {
-		const savedFilters = localStorage.getItem("appliedFilters");
-		if (savedFilters) {
-			setAppliedFilters(JSON.parse(savedFilters));
+		const lastPath = sessionStorage.getItem(LAST_PATH_KEY);
+		const currentPath = location.pathname;
+
+		//if theres no lastPath or it's different from current path, it's a new navigation
+		if (!lastPath || lastPath !== currentPath) {
+			//clear filters if coming from a different path
+			if (lastPath) {
+				localStorage.removeItem(FILTERS_STORAGE_KEY);
+			}
 		}
 
-		//clean up storage after moving to a diff page
-		return () => {
-			const isRefresh =
-				sessionStorage.getItem("currentPath") === location.pathname;
-			if (!isRefresh) {
-				localStorage.removeItem("appliedFilters");
-			}
-		};
-	}, [location.pathname]);
+		//update the last path
+		sessionStorage.setItem(LAST_PATH_KEY, currentPath);
 
-	//current path setup
-	useEffect(() => {
-		sessionStorage.setItem("currentPath", location.pathname);
+		//load existing filters from localstorage
+		const savedFilters = localStorage.getItem(FILTERS_STORAGE_KEY);
+		if (savedFilters) {
+			try {
+				setAppliedFilters(JSON.parse(savedFilters));
+			} catch (e) {
+				//reset filters if parsing fails
+				setAppliedFilters({
+					departments: [],
+					priorities: [],
+					employees: [],
+				});
+			}
+		}
+
+		//add a beforeunload event listener to detect page reload
+		const handleBeforeUnload = () => {
+			//set a flag to indicate page refresh
+			sessionStorage.setItem("isRefresh", "true");
+		};
+
+		window.addEventListener("beforeunload", handleBeforeUnload);
+
+		return () => {
+			window.removeEventListener("beforeunload", handleBeforeUnload);
+
+			//check if user's navigating away or refreshing
+			const isRefresh = sessionStorage.getItem("isRefresh") === "true";
+
+			if (!isRefresh) {
+				//if not refreshing, clear filters when leaving the page
+				localStorage.removeItem(FILTERS_STORAGE_KEY);
+			}
+
+			//clear the refresh flag
+			sessionStorage.removeItem("isRefresh");
+		};
 	}, [location.pathname]);
 
 	useEffect(() => {
@@ -100,11 +141,11 @@ const Home = () => {
 			applyFilters();
 		}
 
-		//save to local storage when filters change
+		//save to localStorage when filters change
 		if (Object.values(appliedFilters).some((filter) => filter.length > 0)) {
-			localStorage.setItem("appliedFilters", JSON.stringify(appliedFilters));
+			localStorage.setItem(FILTERS_STORAGE_KEY, JSON.stringify(appliedFilters));
 		} else {
-			localStorage.removeItem("appliedFilters");
+			localStorage.removeItem(FILTERS_STORAGE_KEY);
 		}
 	}, [appliedFilters, tasks]);
 
@@ -141,7 +182,31 @@ const Home = () => {
 		setAppliedFilters(filters);
 	};
 
+	//clear all filters
+	const handleClearAllFilters = () => {
+		const emptyFilters = {
+			departments: [],
+			priorities: [],
+			employees: [],
+		};
+		setAppliedFilters(emptyFilters);
+		localStorage.removeItem(FILTERS_STORAGE_KEY);
+	};
+
+	//remove a single filter
+	const handleRemoveFilter = (filterType, filterId) => {
+		const updatedFilters = {
+			...appliedFilters,
+			[filterType]: appliedFilters[filterType].filter(
+				(filter) => filter.id !== filterId
+			),
+		};
+		setAppliedFilters(updatedFilters);
+	};
+
 	const handleTaskClick = (taskId) => {
+		//clear filters when navigating to a task detail page
+		localStorage.removeItem(FILTERS_STORAGE_KEY);
 		navigate(`/task/${taskId}`);
 	};
 
@@ -172,6 +237,11 @@ const Home = () => {
 		return statuses.length > 0 ? groupTasksByStatus() : {};
 	}, [filteredTasks, statuses]);
 
+	//check if any filters are applied
+	const hasFilters = Object.values(appliedFilters).some(
+		(filters) => filters.length > 0
+	);
+
 	return (
 		<Container>
 			<Header />
@@ -181,17 +251,31 @@ const Home = () => {
 					updateSelectedFilters={handleFilterUpdate}
 					initialFilters={appliedFilters}
 				/>
-				<ChosenFiltersContainer>
-					{Object.entries(appliedFilters).map(([filterType, filters]) =>
-						filters.map((filter) => (
-							<ChosenFilter key={`${filterType}-${filter.id}`}>
-								{filterType === "employees"
-									? `${filter.name} ${filter.surname}`
-									: filter.name}
-							</ChosenFilter>
-						))
-					)}
-				</ChosenFiltersContainer>
+
+				{hasFilters && (
+					<>
+						<ChosenFiltersContainer>
+							{Object.entries(appliedFilters).map(([filterType, filters]) =>
+								filters.map((filter) => (
+									<FilterWithCloseButton key={`${filterType}-${filter.id}`}>
+										{filterType === "employees"
+											? `${filter.name} ${filter.surname}`
+											: filter.name}
+										<CloseButton
+											onClick={() => handleRemoveFilter(filterType, filter.id)}
+										>
+											✕
+										</CloseButton>
+									</FilterWithCloseButton>
+								))
+							)}
+							<ClearAllButton onClick={handleClearAllFilters}>
+								გასუფთავება
+							</ClearAllButton>
+						</ChosenFiltersContainer>
+					</>
+				)}
+
 				<TaskBoard>
 					{statuses.map((status) => (
 						<StatusColumn
