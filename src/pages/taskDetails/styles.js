@@ -21,6 +21,10 @@ export const BSideContainer = styled.div`
 	border-radius: 10px;
 	padding: 40px 45px;
 	margin-top: 20px;
+	max-height: 700px;
+	overflow-y: auto;
+	position: relative;
+	gap: 200px;
 `;
 
 export const TextContainer = styled.div`

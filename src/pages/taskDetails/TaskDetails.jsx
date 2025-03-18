@@ -31,6 +31,7 @@ import statusIcon from "../../assets/icons/pie-chart.svg";
 import employeeIcon from "../../assets/icons/employee.svg";
 import calendarIcon from "../../assets/icons/calendar.svg";
 import DropDown from "../../components/common/dropdown/DropDown";
+import Comments from "../../components/pages/taskPage/comments/Comments";
 
 const TaskDetails = () => {
 	const { id } = useParams();
@@ -179,7 +180,9 @@ const TaskDetails = () => {
 						</DetailsContainer>
 					</ASideContainer>
 				)}
-				<BSideContainer></BSideContainer>
+				<BSideContainer>
+					<Comments />
+				</BSideContainer>
 			</TaskContainer>
 		</Container>
 	);

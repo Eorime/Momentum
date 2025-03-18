@@ -40,8 +40,26 @@ export const apiService = {
 	},
 
 	//comments
-	getComments: (id) => api.get(`/tasks/${id}/comments`),
-	createComment: (id, commentData) => api.post(`/tasks/${id}/comments`),
+	getCommentsByTaskId: async (taskId) => {
+		try {
+			const response = await api.get(`/tasks/${taskId}/comments`);
+			return response;
+		} catch (error) {
+			throw error;
+		}
+	},
+
+	addComment: async (taskId, text, parentId = null) => {
+		try {
+			const response = await api.post(`/tasks/${taskId}/comments`, {
+				text: text,
+				parent_id: parentId,
+			});
+			return response;
+		} catch (error) {
+			throw error;
+		}
+	},
 
 	//tasks
 	getTasks: () => api.get("/tasks"),

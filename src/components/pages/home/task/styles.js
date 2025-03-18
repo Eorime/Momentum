@@ -10,6 +10,7 @@ export const Container = styled.div`
 	color: #212529;
 	height: 217px;
 	justify-content: space-between;
+	overflow-y: auto; //in case if the NAME is too long
 `;
 
 export const FiltersContainer = styled.div`

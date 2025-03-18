@@ -64,7 +64,7 @@ const Task = ({ task }) => {
 			<TextContainer>
 				<TaskTitle>{task.name}</TaskTitle>
 				<TaskDescription>
-					{task.description.length > 100
+					{task.description?.length > 100
 						? `${task.description.substring(0, 100)}...`
 						: task.description}
 				</TaskDescription>

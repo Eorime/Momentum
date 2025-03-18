@@ -68,7 +68,7 @@ export const FilterOptions = styled.div`
 	border-radius: 10px;
 	border: 0.5px solid #8338ec;
 	position: absolute;
-	z-index: 2;
+	z-index: 1;
 	width: 655px;
 
 	&::-webkit-scrollbar {

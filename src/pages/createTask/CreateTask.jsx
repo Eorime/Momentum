@@ -118,8 +118,6 @@ const CreateTask = () => {
 
 			const descriptionWordCount = countWords(formData.description);
 
-			const isStatusDone = formData.status && formData.status.id === 4;
-
 			const isValid =
 				formData.name &&
 				formData.name.trim().length >= 3 &&
@@ -130,8 +128,7 @@ const CreateTask = () => {
 				(formData.department ? formData.employee : true) &&
 				(!formData.description ||
 					formData.description.trim() === "" ||
-					descriptionWordCount >= 4) &&
-				!isStatusDone; //TODO add message for clarity
+					descriptionWordCount >= 4);
 
 			setIsFormValid(isValid);
 		};
