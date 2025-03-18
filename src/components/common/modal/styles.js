@@ -187,3 +187,11 @@ export const AvatarPreview = styled.img`
 	border-radius: 50%;
 	object-fit: cover;
 `;
+
+export const BinSvg = styled.svg`
+	width: 24px;
+	height: 24px;
+	position: absolute;
+	right: -3px;
+	top: 65px;
+`;
