@@ -60,9 +60,14 @@ export const PriorityIcon = styled.img`
 `;
 
 export const PriorityContainer = styled.div`
-	padding: 5px;
 	display: flex;
+	align-items: center;
 	gap: 4px;
+	font-family: "Firago";
+	font-weight: 500;
+	border: solid 0.5px;
+	border-radius: 4px;
+	padding: 4px 6px;
 `;
 
 export const DetailsContainer = styled.div`

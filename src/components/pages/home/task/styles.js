@@ -48,7 +48,7 @@ export const PriorityWrapper = styled.div`
 	gap: 4px;
 	font-family: "Firago";
 	font-weight: 500;
-	border: solid 0.5px #ffbe0b;
+	border: solid 0.5px;
 	border-radius: 4px;
 	padding: 4px 6px;
 `;
@@ -74,7 +74,7 @@ export const EmployeeAvatar = styled.img`
 export const DueDate = styled.span`
 	font-family: "Firago";
 	font-size: 12px;
-	font-weight: 400;
+	font-weight: 200;
 `;
 
 export const Department = styled.div`

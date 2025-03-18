@@ -42,6 +42,16 @@ const TaskDetails = () => {
 	const [selectedStatus, setSelectedStatus] = useState(null);
 	const [updating, setUpdating] = useState(false);
 
+	const priorityColors = {
+		3: { border: "#FA4D4D", font: "#FA4D4D" },
+		2: { border: "#FFBE0B", font: "#FFBE0B" },
+		1: { border: "#08A508", font: "#08A508" },
+	};
+
+	const getPriorityStyle = (priorityId) => {
+		return priorityColors[priorityId] || { border: "#FFBE0B", font: "#212529" }; //default fallback
+	};
+
 	const formatDateGeorgian = (isoDateString) => {
 		if (!isoDateString) return "";
 
@@ -124,7 +134,12 @@ const TaskDetails = () => {
 				{!loading && !error && task && (
 					<ASideContainer>
 						<DepartmentWrapper>
-							<PriorityContainer>
+							<PriorityContainer
+								style={{
+									borderColor: getPriorityStyle(task.priority.id).border,
+									color: getPriorityStyle(task.priority.id).font,
+								}}
+							>
 								<PriorityIcon src={task.priority.icon} />
 								<TaskInfo>{task.priority?.name}</TaskInfo>
 							</PriorityContainer>
