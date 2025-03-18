@@ -316,6 +316,8 @@ const Modal = ({ onClose }) => {
 														...employeeFormData,
 														avatar: "",
 													});
+
+													document.getElementById("avatarInput").value = "";
 												}}
 											>
 												<rect

@@ -7,6 +7,7 @@ import {
 	CommentAreaWrapper,
 	CommentButton,
 	CommentCountLabel,
+	CommentCountNumber,
 	CommentCountWrapper,
 	CommenterAvatar,
 	CommentText,
@@ -119,6 +120,7 @@ const Comments = () => {
 			</CommentAreaWrapper>
 			<CommentCountWrapper>
 				<CommentCountLabel>კომენტარები</CommentCountLabel>
+				<CommentCountNumber>{comments.length}</CommentCountNumber>
 			</CommentCountWrapper>
 			<AllComments>
 				{comments.map((comment) => (

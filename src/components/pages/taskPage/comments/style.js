@@ -54,6 +54,7 @@ export const CommentCountWrapper = styled.div`
 	display: flex;
 	margin-bottom: 40px;
 	gap: 7px;
+	align-items: center;
 `;
 
 export const CommentCountLabel = styled.span`
@@ -63,7 +64,15 @@ export const CommentCountLabel = styled.span`
 	color: #000000;
 `;
 
-export const CommentCountNumber = styled.div``;
+export const CommentCountNumber = styled.div`
+	background-color: #8338ec;
+	font-family: "Firago";
+	font-size: 14px;
+	font-weight: 500;
+	color: #ffffff;
+	padding: 3px 11px;
+	border-radius: 30px;
+`;
 
 export const AllComments = styled.div``;
 
@@ -124,10 +133,27 @@ export const ReplyButton = styled.button`
 	cursor: pointer;
 	padding: 0;
 	font-size: 12px;
+
+	transition: 0.2s all ease-in-out;
 `;
 
 export const ReplyButtonWrapper = styled.div`
 	display: flex;
 	align-items: center;
 	gap: 6px;
+
+	&:hover {
+		${ReplyButton} {
+			color: #b588f4;
+		}
+
+		svg path {
+			fill: #b588f4;
+			transition: 0.2s all ease-in-out;
+		}
+	}
+
+	svg path {
+		transition: 0.2s all ease-in-out;
+	}
 `;
