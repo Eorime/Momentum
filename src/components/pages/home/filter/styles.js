@@ -107,3 +107,21 @@ export const FilterAvatar = styled.img`
 	margin-right: 10px;
 	object-fit: cover;
 `;
+
+export const FilterButton = styled.button`
+	background-color: #8338ec;
+	color: white;
+	border: none;
+	border-radius: 20px;
+	cursor: pointer;
+	font-family: "Firago";
+	font-weight: 400;
+	font-size: 16px;
+	padding: 8px 49px;
+	margin-right: 30px;
+`;
+
+export const FilterButtonWrapper = styled.div`
+	display: flex;
+	justify-content: flex-end;
+`;

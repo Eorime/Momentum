@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import {
 	Container,
 	FilterArrow,
-	FilterAvatar,
 	FilterContainer,
 	FilterItem,
 	FilterLabel,
@@ -10,6 +9,9 @@ import {
 	FilterOptionLabel,
 	FilterOptions,
 	FilterOptionWrapper,
+	FilterAvatar,
+	FilterButton,
+	FilterButtonWrapper,
 } from "./styles";
 import apiService from "../../../../services/api";
 
@@ -34,7 +36,15 @@ const Filter = ({ updateSelectedFilters }) => {
 
 	const [activeFilter, setActiveFilter] = useState(null);
 	const [filterOptions, setFilterOptions] = useState([]);
-	const [selectedFilters, setSelectedFilters] = useState({
+
+	const [appliedFilters, setAppliedFilters] = useState({
+		departments: [],
+		priorities: [],
+		employees: [],
+	});
+
+	//not yet applied filters
+	const [pendingFilters, setPendingFilters] = useState({
 		departments: [],
 		priorities: [],
 		employees: [],
@@ -59,60 +69,77 @@ const Filter = ({ updateSelectedFilters }) => {
 	};
 
 	const handleOptionSelect = (option) => {
-		let updatedFilters = { ...selectedFilters };
+		let updatedFilters = { ...pendingFilters };
 
 		if (activeFilter === 0) {
-			const isSelected = selectedFilters.departments.some(
+			const isSelected = pendingFilters.departments.some(
 				(item) => item.id === option.id
 			);
 
 			updatedFilters = {
-				...selectedFilters,
+				...pendingFilters,
 				departments: isSelected
-					? selectedFilters.departments.filter((item) => item.id !== option.id)
-					: [...selectedFilters.departments, option],
+					? pendingFilters.departments.filter((item) => item.id !== option.id)
+					: [...pendingFilters.departments, option],
 			};
 		} else if (activeFilter === 1) {
-			const isSelected = selectedFilters.priorities.some(
+			const isSelected = pendingFilters.priorities.some(
 				(item) => item.id === option.id
 			);
 
 			updatedFilters = {
-				...selectedFilters,
+				...pendingFilters,
 				priorities: isSelected
-					? selectedFilters.priorities.filter((item) => item.id !== option.id)
-					: [...selectedFilters.priorities, option],
+					? pendingFilters.priorities.filter((item) => item.id !== option.id)
+					: [...pendingFilters.priorities, option],
 			};
 		} else if (activeFilter === 2) {
-			const isSelected = selectedFilters.employees.some(
+			const isSelected = pendingFilters.employees.some(
 				(item) => item.id === option.id
 			);
 
 			updatedFilters = {
-				...selectedFilters,
+				...pendingFilters,
 				employees: isSelected ? [] : [option],
 			};
 		}
 
-		//local state update
-		setSelectedFilters(updatedFilters);
-		console.log(updatedFilters);
-
-		//send updated filters to the parent component
-		if (updateSelectedFilters) {
-			updateSelectedFilters(updatedFilters);
-		}
+		//update pending filters
+		setPendingFilters(updatedFilters);
 	};
+
+	//apply all filters when clicked
+	const handleApplyAllFilters = () => {
+		//update filters
+		setAppliedFilters(pendingFilters);
+
+		//send updated filters to parent
+		if (updateSelectedFilters) {
+			console.log("Sending updated filters to parent:", pendingFilters);
+			updateSelectedFilters(pendingFilters);
+		}
+
+		//close dropdown after applying
+		setActiveFilter(null);
+	};
+
+	React.useEffect(() => {
+		setPendingFilters(appliedFilters);
+	}, []);
 
 	const isOptionSelected = (option) => {
 		if (activeFilter === 0) {
-			return selectedFilters.departments.some((item) => item.id === option.id);
+			return pendingFilters.departments.some((item) => item.id === option.id);
 		} else if (activeFilter === 1) {
-			return selectedFilters.priorities.some((item) => item.id === option.id);
+			return pendingFilters.priorities.some((item) => item.id === option.id);
 		} else if (activeFilter === 2) {
-			return selectedFilters.employees.some((item) => item.id === option.id);
+			return pendingFilters.employees.some((item) => item.id === option.id);
 		}
 		return false;
+	};
+
+	const shouldShowAvatar = () => {
+		return activeFilter === 2;
 	};
 
 	return (
@@ -148,14 +175,18 @@ const Filter = ({ updateSelectedFilters }) => {
 							/>
 							<FilterOptionLabel htmlFor={`option-${option.id}`}>
 								<>
-									{activeFilter === 2 && option.avatar && (
+									{shouldShowAvatar() && option.avatar && (
 										<FilterAvatar src={option.avatar} alt={option.name} />
 									)}
-									{option.name} {option.surname}
+									{option.name} {option.surname || ""}
 								</>
 							</FilterOptionLabel>
 						</FilterOptionWrapper>
 					))}
+
+					<FilterButtonWrapper>
+						<FilterButton onClick={handleApplyAllFilters}>ფილტრი</FilterButton>
+					</FilterButtonWrapper>
 				</FilterOptions>
 			)}
 		</Container>
