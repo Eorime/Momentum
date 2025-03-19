@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
 	Container,
 	FilterArrow,
@@ -120,17 +120,11 @@ const Filter = ({ updateSelectedFilters }) => {
 			updateSelectedFilters(pendingFilters);
 		}
 
-		setPendingFilters({
-			departments: [],
-			priorities: [],
-			employees: [],
-		});
-
 		//close dropdown after applying
 		setActiveFilter(null);
 	};
 
-	React.useEffect(() => {
+	useEffect(() => {
 		setPendingFilters(appliedFilters);
 	}, []);
 

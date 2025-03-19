@@ -31,6 +31,7 @@ export const CommentArea = styled.textarea`
 
 export const CommentButton = styled.button`
 	background-color: #8338ec;
+	opacity: ${(props) => (props.disabled ? "0.5" : "1")};
 	border-radius: 20px;
 	padding: 8px 18px;
 	color: #ffffff;
@@ -44,9 +45,15 @@ export const CommentButton = styled.button`
 	position: absolute;
 	right: 20px;
 	bottom: 20px;
+	cursor: ${({ disabled }) => (disabled ? "default" : "pointer")};
 
 	&:hover {
-		background-color: #b588f4;
+		${({ disabled }) =>
+			!disabled &&
+			`
+      background-color: #b588f4;
+    `}
+		color: #ffffff;
 	}
 `;
 

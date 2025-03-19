@@ -402,6 +402,7 @@ const CreateTask = () => {
 									renderOption={renderPriority}
 									renderSelected={renderPriority}
 									onSelect={handleDropdownChange("priority")}
+									placeholder={dropdownData.priorities[1]?.name}
 								/>{" "}
 							</InputWrapper>
 							<InputWrapper>

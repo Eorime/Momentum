@@ -25,6 +25,7 @@ const Comments = () => {
 	const [newComment, setNewComment] = useState("");
 	const [replyText, setReplyText] = useState("");
 	const [replyToId, setReplyToId] = useState(null);
+	const [invalid, setInvalid] = useState(false);
 
 	useEffect(() => {
 		const fetchComments = async () => {
@@ -50,8 +51,10 @@ const Comments = () => {
 
 	const handleSubmitComment = async () => {
 		//checks if comment is empty
-		if (!newComment.trim()) return;
-
+		if (!newComment.trim()) {
+			setInvalid(true);
+			return;
+		}
 		try {
 			//passes the text as a parameter
 			const response = await apiService.addComment(taskId, newComment.trim());
@@ -68,8 +71,10 @@ const Comments = () => {
 
 	const handleSubmitReply = async () => {
 		//checks if reply is empty
-		if (!replyText.trim() || !replyToId) return;
-
+		if (!replyText.trim() || !replyToId) {
+			setInvalid(true);
+			return;
+		}
 		try {
 			//passes the text as a parameter
 			const response = await apiService.addComment(
