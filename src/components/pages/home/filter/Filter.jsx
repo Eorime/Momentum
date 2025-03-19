@@ -12,6 +12,7 @@ import {
 	FilterAvatar,
 	FilterButton,
 	FilterButtonWrapper,
+	CustomFilterCheck,
 } from "./styles";
 import apiService from "../../../../services/api";
 
@@ -173,13 +174,38 @@ const Filter = ({ updateSelectedFilters }) => {
 				<FilterOptions>
 					{filterOptions.map((option) => (
 						<FilterOptionWrapper key={option.id}>
-							<FilterOptionCheck
-								type="checkbox"
-								id={`option-${option.id}`}
-								checked={isOptionSelected(option)}
-								onChange={() => handleOptionSelect(option)}
-							/>
-							<FilterOptionLabel htmlFor={`option-${option.id}`}>
+							<CustomFilterCheck onClick={() => handleOptionSelect(option)}>
+								<FilterOptionCheck
+									type="checkbox"
+									id={`option-${option.id}`}
+									checked={isOptionSelected(option)}
+									onChange={() => {}}
+								/>
+								{isOptionSelected(option) && (
+									<svg
+										width="14"
+										height="10"
+										viewBox="0 0 14 10"
+										fill="none"
+										xmlns="http://www.w3.org/2000/svg"
+										style={{
+											position: "absolute",
+											top: "50%",
+											left: "50%",
+											transform: "translate(-50%, -50%)",
+										}}
+									>
+										<path
+											d="M12.3333 1.33337L4.99996 8.66671L1.66663 5.33337"
+											stroke="#8338EC"
+											strokeWidth="1.5"
+											strokeLinecap="round"
+											strokeLinejoin="round"
+										/>
+									</svg>
+								)}
+							</CustomFilterCheck>
+							<FilterOptionLabel onClick={() => handleOptionSelect(option)}>
 								<>
 									{shouldShowAvatar() && option.avatar && (
 										<FilterAvatar src={option.avatar} alt={option.name} />

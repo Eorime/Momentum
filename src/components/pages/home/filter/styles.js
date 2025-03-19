@@ -57,7 +57,6 @@ export const FilterOptions = styled.div`
 	display: flex;
 	flex-direction: column;
 	overflow-y: scroll;
-	gap: 22px;
 	background-color: #ffffff;
 	height: auto;
 	max-height: 280px;
@@ -81,12 +80,25 @@ export const FilterOptions = styled.div`
 export const FilterOptionWrapper = styled.div`
 	display: flex;
 	gap: 15px;
+	align-items: center;
+	margin-bottom: 22px;
+`;
+
+export const CustomFilterCheck = styled.div`
+	width: 22px;
+	height: 22px;
+	border-radius: 6px;
+	border: 1px solid #8338ec;
+	cursor: pointer;
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 `;
 
 export const FilterOptionCheck = styled.input`
-	width: 22px;
-	border-radius: 6px;
-	border: 1px solid #212529;
+	opacity: 0;
+	cursor: pointer;
 `;
 
 export const FilterOptionLabel = styled.div`
@@ -119,9 +131,24 @@ export const FilterButton = styled.button`
 	font-size: 16px;
 	padding: 8px 49px;
 	margin-right: 30px;
+	transition: 0.2s ease-in-out all;
+
+	&:hover {
+		background-color: #b588f4;
+	}
 `;
 
 export const FilterButtonWrapper = styled.div`
 	display: flex;
 	justify-content: flex-end;
+`;
+
+export const CheckIcon = styled.div`
+	display: ${({ checked }) => (checked ? "block" : "none")};
+	color: white;
+
+	svg {
+		width: 12px;
+		height: 12px;
+	}
 `;

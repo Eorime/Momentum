@@ -73,7 +73,7 @@ export const PriorityContainer = styled.div`
 	font-weight: 500;
 	border: solid 0.5px;
 	border-radius: 4px;
-	padding: 4px 6px;
+	padding: 4px 8px;
 `;
 
 export const DetailsContainer = styled.div`
