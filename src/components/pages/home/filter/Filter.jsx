@@ -119,6 +119,12 @@ const Filter = ({ updateSelectedFilters }) => {
 			updateSelectedFilters(pendingFilters);
 		}
 
+		setPendingFilters({
+			departments: [],
+			priorities: [],
+			employees: [],
+		});
+
 		//close dropdown after applying
 		setActiveFilter(null);
 	};

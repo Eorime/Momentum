@@ -23,6 +23,7 @@ const Comments = () => {
 	const { id: taskId } = useParams();
 	const [comments, setComments] = useState([]);
 	const [newComment, setNewComment] = useState("");
+	const [replyText, setReplyText] = useState("");
 	const [replyToId, setReplyToId] = useState(null);
 
 	useEffect(() => {
@@ -43,52 +44,69 @@ const Comments = () => {
 		setNewComment(e.target.value);
 	};
 
+	const handleReplyTextChange = (e) => {
+		setReplyText(e.target.value);
+	};
+
 	const handleSubmitComment = async () => {
 		//checks if comment is empty
 		if (!newComment.trim()) return;
 
 		try {
 			//passes the text as a parameter
-			const response = await apiService.addComment(
-				taskId,
-				newComment.trim(),
-				replyToId
-			);
+			const response = await apiService.addComment(taskId, newComment.trim());
 
-			//update list
-			if (replyToId) {
-				//if its a reply, find parent and add to sub
-				const updatedComments = comments.map((comment) => {
-					if (comment.id === replyToId) {
-						return {
-							...comment,
-							sub_comments: [response.data, ...(comment.sub_comments || [])],
-						};
-					}
-					return comment;
-				});
-				setComments(updatedComments);
-			} else {
-				//add new comment at the top
-				setComments([{ ...response.data, sub_comments: [] }, ...comments]);
-			}
+			//add new comment at the top
+			setComments([{ ...response.data, sub_comments: [] }, ...comments]);
 
-			//clear the input and reset reply state
+			//clear the input
 			setNewComment("");
-			setReplyToId(null);
 		} catch (error) {
 			console.log("couldnt create comment", error);
 		}
 	};
 
+	const handleSubmitReply = async () => {
+		//checks if reply is empty
+		if (!replyText.trim() || !replyToId) return;
+
+		try {
+			//passes the text as a parameter
+			const response = await apiService.addComment(
+				taskId,
+				replyText.trim(),
+				replyToId
+			);
+
+			//update list - find parent and add to sub
+			const updatedComments = comments.map((comment) => {
+				if (comment.id === replyToId) {
+					return {
+						...comment,
+						sub_comments: [response.data, ...(comment.sub_comments || [])],
+					};
+				}
+				return comment;
+			});
+
+			setComments(updatedComments);
+
+			//clear the input and reset reply state
+			setReplyText("");
+			setReplyToId(null);
+		} catch (error) {
+			console.log("couldnt create reply", error);
+		}
+	};
+
 	const handleReply = (commentId) => {
 		setReplyToId(commentId);
-
-		document.querySelector(".comment-input")?.focus();
+		setReplyText("");
 	};
 
 	const cancelReply = () => {
 		setReplyToId(null);
+		setReplyText("");
 	};
 
 	//common styles for comment content
@@ -100,11 +118,6 @@ const Comments = () => {
 	return (
 		<Container>
 			<CommentAreaWrapper>
-				{replyToId && (
-					<CancelSubComment onClick={cancelReply}>
-						პასუხის გაუქმება
-					</CancelSubComment>
-				)}
 				<CommentArea
 					className="comment-input"
 					value={newComment}
@@ -118,14 +131,15 @@ const Comments = () => {
 					დააკომენტარე
 				</CommentButton>
 			</CommentAreaWrapper>
+
 			<CommentCountWrapper>
 				<CommentCountLabel>კომენტარები</CommentCountLabel>
 				<CommentCountNumber>{comments.length}</CommentCountNumber>
 			</CommentCountWrapper>
+
 			<AllComments>
 				{comments.map((comment) => (
 					<div key={comment.id} style={{ marginBottom: "20px" }}>
-						{/* parent */}
 						<OneComment style={{ width: "100%" }}>
 							<CommenterAvatar
 								src={comment.author_avatar}
@@ -164,6 +178,34 @@ const Comments = () => {
 								</ReplyButtonWrapper>
 							</div>
 						</OneComment>
+
+						{replyToId === comment.id && (
+							<div
+								style={{
+									marginLeft: "50px",
+									marginTop: "10px",
+									marginBottom: "15px",
+								}}
+							>
+								<CommentAreaWrapper>
+									<CancelSubComment onClick={cancelReply}>
+										პასუხის გაუქმება
+									</CancelSubComment>
+									<CommentArea
+										value={replyText}
+										onChange={handleReplyTextChange}
+										placeholder="დაწერე პასუხი"
+									/>
+									<CommentButton
+										onClick={handleSubmitReply}
+										disabled={!replyText.trim()}
+									>
+										პასუხი
+									</CommentButton>
+								</CommentAreaWrapper>
+							</div>
+						)}
+
 						{comment.sub_comments && comment.sub_comments.length > 0 && (
 							<div style={{ marginLeft: "50px" }}>
 								{comment.sub_comments.map((subComment) => (
