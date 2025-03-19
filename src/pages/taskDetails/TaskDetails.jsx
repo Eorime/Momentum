@@ -5,6 +5,7 @@ import {
 	BSideContainer,
 	Container,
 	DeadlineContainer,
+	DepartmentContainer,
 	DepartmentWrapper,
 	DetailsContainer,
 	DetailsLabel,
@@ -50,6 +51,20 @@ const TaskDetails = () => {
 
 	const getPriorityStyle = (priorityId) => {
 		return priorityColors[priorityId] || { border: "#FFBE0B", font: "#212529" }; //default fallback
+	};
+
+	const departmentColors = {
+		1: { backgroundColor: "#FA4D4D" },
+		2: { backgroundColor: "#FF66A8" },
+		3: { backgroundColor: "#89B6FF" },
+		4: { backgroundColor: "#FD9A6A" },
+		5: { backgroundColor: "#89B6FF" },
+		6: { backgroundColor: "#FFD86D" },
+		7: { backgroundColor: "#FF66A8" },
+	};
+
+	const getDepartmentStyle = (departmentId) => {
+		return departmentColors[departmentId] || { backgroundColor: "#FFBE0B" };
 	};
 
 	const formatDateGeorgian = (isoDateString) => {
@@ -133,7 +148,7 @@ const TaskDetails = () => {
 			<TaskContainer>
 				{!loading && !error && task && (
 					<ASideContainer>
-						<DepartmentWrapper>
+						<DepartmentContainer>
 							<PriorityContainer
 								style={{
 									borderColor: getPriorityStyle(task.priority.id).border,
@@ -143,8 +158,15 @@ const TaskDetails = () => {
 								<PriorityIcon src={task.priority.icon} />
 								<TaskInfo>{task.priority?.name}</TaskInfo>
 							</PriorityContainer>
-							<TaskInfo>{task?.department.name}</TaskInfo>
-						</DepartmentWrapper>
+							<DepartmentWrapper
+								style={{
+									backgroundColor: getDepartmentStyle(task.department.id)
+										.backgroundColor,
+								}}
+							>
+								<TaskInfo>{task?.department.name}</TaskInfo>
+							</DepartmentWrapper>
+						</DepartmentContainer>
 						<TextContainer>
 							<TaskTitle>{task?.name}</TaskTitle>
 							<TaskDescription>{task.description}</TaskDescription>

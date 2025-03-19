@@ -5,6 +5,7 @@ import {
 	CommentsContainer,
 	Container,
 	Department,
+	DepartmentWrapper,
 	DueDate,
 	EmployeeAvatar,
 	EmployeeContainer,
@@ -26,6 +27,20 @@ const Task = ({ task }) => {
 
 	const getPriorityStyle = (priorityId) => {
 		return priorityColors[priorityId] || { border: "#FFBE0B", font: "#212529" }; //default fallback
+	};
+
+	const departmentColors = {
+		1: { backgroundColor: "#FA4D4D" },
+		2: { backgroundColor: "#FF66A8" },
+		3: { backgroundColor: "#89B6FF" },
+		4: { backgroundColor: "#FD9A6A" },
+		5: { backgroundColor: "#89B6FF" },
+		6: { backgroundColor: "#FFD86D" },
+		7: { backgroundColor: "#FF66A8" },
+	};
+
+	const getDepartmentStyle = (departmentId) => {
+		return departmentColors[departmentId] || { backgroundColor: "#FFBE0B" };
 	};
 
 	const formatDateGeorgian = (isoDateString) => {
@@ -69,11 +84,18 @@ const Task = ({ task }) => {
 					<PriorityIcon src={task.priority.icon} />
 					<PriorityLabel>{task.priority.name}</PriorityLabel>
 				</PriorityWrapper>
-				<Department>
-					{task.department.name.length > 10
-						? `${task.department.name.substring(0, 10)}...`
-						: task.department.name}
-				</Department>
+				<DepartmentWrapper
+					style={{
+						backgroundColor: getDepartmentStyle(task.department.id)
+							.backgroundColor,
+					}}
+				>
+					<Department>
+						{task.department.name.length > 10
+							? `${task.department.name.substring(0, 10)}...`
+							: task.department.name}
+					</Department>
+				</DepartmentWrapper>
 				<DueDate>{formattedDate}</DueDate>
 			</FiltersContainer>
 			<TextContainer>

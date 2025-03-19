@@ -48,11 +48,17 @@ export const TaskDescription = styled.p`
 
 export const TaskInfo = styled.div``;
 
-export const DepartmentWrapper = styled.div`
+export const DepartmentContainer = styled.div`
 	display: flex;
 	gap: 18px;
 	margin-bottom: 12px;
 	align-items: center;
+`;
+
+export const DepartmentWrapper = styled.div`
+	border-radius: 15px;
+	padding: 5px 18px;
+	color: #ffffff;
 `;
 
 export const PriorityIcon = styled.img`
@@ -143,4 +149,5 @@ export const EmployeeDepartment = styled.span`
 
 export const DropDownWrapper = styled.div`
 	width: 270px;
+	padding-right: 30px;
 `;

@@ -77,6 +77,12 @@ export const DueDate = styled.span`
 	font-weight: 200;
 `;
 
+export const DepartmentWrapper = styled.div`
+	border-radius: 15px;
+	padding: 5px 18px;
+	color: #ffffff;
+`;
+
 export const Department = styled.div`
 	font-family: "Firago";
 	font-size: 12px;
