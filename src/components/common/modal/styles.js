@@ -23,7 +23,7 @@ export const ModalContainer = styled.div`
 	padding-right: 50px;
 	padding-bottom: 60px;
 	border-radius: 10px;
-	z-index: 10;
+	z-index: 12;
 	display: flex;
 	flex-direction: column;
 	gap: 45px;

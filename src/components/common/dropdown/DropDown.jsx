@@ -13,7 +13,8 @@ const DropdownHeader = styled.div`
 	background-color: #ffffff;
 	outline: none;
 	box-shadow: none;
-	border: 1px solid #dee2e6;
+	border: ${({ isOpen }) =>
+		!isOpen ? "2px solid #dee2e6" : "2px solid #8338ec"};
 	font-size: 14px;
 	font-family: "Firago";
 	font-weight: 200;
@@ -28,9 +29,6 @@ const DropdownHeader = styled.div`
 	width: 100%;
 	height: auto;
 	box-sizing: border-box;
-	&:focus {
-		border-color: #4b4b4b;
-	}
 `;
 
 const DropdownIcon = styled.div`
@@ -41,17 +39,20 @@ const DropdownIcon = styled.div`
 
 const DropdownList = styled.div`
 	position: absolute;
-	top: 100%;
+	top: 80%;
 	left: 0;
 	right: 0;
 	margin-top: 5px;
 	padding: 0;
 	background-color: #ffffff;
-	border: 1px solid #8338ec;
-	border-radius: 5px;
+	border-bottom: 2px solid #8338ec;
+	border-left: 2px solid #8338ec;
+	border-right: 2px solid #8338ec;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
 	max-height: 200px;
 	overflow-y: auto;
-	z-index: 100;
+	z-index: 10;
 	display: ${({ isOpen }) => (isOpen ? "block" : "none")};
 
 	&::-webkit-scrollbar {
@@ -172,7 +173,11 @@ const DropDown = ({
 
 	return (
 		<DropdownContainer ref={dropdownRef} disabled={disabled}>
-			<DropdownHeader onClick={toggleDropdown} disabled={disabled}>
+			<DropdownHeader
+				onClick={toggleDropdown}
+				disabled={disabled}
+				isOpen={isOpen}
+			>
 				<ContentWrapper centered={!!selectedOption} isOpen={isOpen}>
 					{selectedOption ? (
 						renderSelected ? (
