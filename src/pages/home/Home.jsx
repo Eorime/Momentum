@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import {
 	ChosenFilter,
 	ChosenFiltersContainer,
+	ChosenFiltersWrapper,
 	ClearAllButton,
 	CloseButton,
 	ColumnHeader,
@@ -255,20 +256,24 @@ const Home = () => {
 				{hasFilters && (
 					<>
 						<ChosenFiltersContainer>
-							{Object.entries(appliedFilters).map(([filterType, filters]) =>
-								filters.map((filter) => (
-									<FilterWithCloseButton key={`${filterType}-${filter.id}`}>
-										{filterType === "employees"
-											? `${filter.name} ${filter.surname}`
-											: filter.name}
-										<CloseButton
-											onClick={() => handleRemoveFilter(filterType, filter.id)}
-										>
-											✕
-										</CloseButton>
-									</FilterWithCloseButton>
-								))
-							)}
+							<ChosenFiltersWrapper>
+								{Object.entries(appliedFilters).map(([filterType, filters]) =>
+									filters.map((filter) => (
+										<FilterWithCloseButton key={`${filterType}-${filter.id}`}>
+											{filterType === "employees"
+												? `${filter.name} ${filter.surname}`
+												: filter.name}
+											<CloseButton
+												onClick={() =>
+													handleRemoveFilter(filterType, filter.id)
+												}
+											>
+												✕
+											</CloseButton>
+										</FilterWithCloseButton>
+									))
+								)}
+							</ChosenFiltersWrapper>
 							<ClearAllButton onClick={handleClearAllFilters}>
 								გასუფთავება
 							</ClearAllButton>

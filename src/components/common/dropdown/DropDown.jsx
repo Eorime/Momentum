@@ -93,6 +93,10 @@ const Placeholder = styled.span`
 	color: ${({ selected }) => (selected ? "#0d0f10" : "#6c757d")};
 `;
 
+const StyledText = styled.span`
+	color: #8338ec;
+`;
+
 const DropDown = ({
 	options = [],
 	placeholder = "",
@@ -193,7 +197,7 @@ const DropDown = ({
 				{showEmployeeOption && onEmployeeOptions && (
 					<DropdownItem onClick={handleEmployeeOptionsClick}>
 						<PlusIcon />
-						{employeeOptionText}
+						<StyledText>{employeeOptionText}</StyledText>
 					</DropdownItem>
 				)}
 

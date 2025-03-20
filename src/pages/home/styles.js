@@ -54,12 +54,37 @@ export const NoTasks = styled.div`
 	color: #888;
 `;
 
-export const ChosenFiltersContainer = styled.div`
-	position: absolute;
-	height: 30px;
-	margin-top: 25px;
+export const ChosenFiltersWrapper = styled.div`
 	display: flex;
 	gap: 8px;
+	width: auto;
+	overflow-x: auto;
+	overflow-y: hidden;
+	white-space: nowrap;
+
+	scrollbar-color: #b588f4 transparent;
+
+	&::-webkit-scrollbar {
+		height: 5px;
+	}
+
+	&::-webkit-scrollbar-track {
+		background: #b588f4;
+		border-radius: 10px;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		display: none;
+	}
+`;
+
+export const ChosenFiltersContainer = styled.div`
+	height: 30px;
+	width: 1000px;
+	margin-top: 25px;
+	position: absolute;
+	display: flex;
+	align-items: center;
 `;
 
 export const ChosenFilter = styled.div`
@@ -70,6 +95,8 @@ export const ChosenFilter = styled.div`
 	padding: 6px 10px;
 	border: 1px solid #ced4da;
 	border-radius: 43px;
+	white-space: nowrap;
+	flex-shrink: 0;
 `;
 
 export const ClearAllButton = styled.button`

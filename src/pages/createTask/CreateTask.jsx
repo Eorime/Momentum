@@ -315,7 +315,6 @@ const CreateTask = () => {
 	const dateInputStyle = {
 		defaultValue: getTomorrowDate(),
 	};
-
 	return (
 		<Container>
 			<Header />
@@ -413,13 +412,15 @@ const CreateTask = () => {
 									renderSelected={renderPriority}
 									onSelect={handleDropdownChange("priority")}
 									placeholder={dropdownData.priorities[1]?.name}
-								/>{" "}
+									value={selected.priority}
+								/>
 							</InputWrapper>
 							<InputWrapper>
 								<InputLabel>სტატუსი*</InputLabel>
 								<DropDown
 									options={dropdownData.statuses}
 									onSelect={handleDropdownChange("status")}
+									value={selected.status}
 								/>
 							</InputWrapper>
 						</FiltersContainer>
@@ -430,6 +431,7 @@ const CreateTask = () => {
 							<DropDown
 								options={dropdownData.departments}
 								onSelect={handleDropdownChange("department")}
+								value={selected.department}
 							/>
 						</InputWrapper>
 						<InputWrapper>
