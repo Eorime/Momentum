@@ -23,9 +23,19 @@ import {
 import apiService from "../../services/api";
 import DropDown from "../../components/common/dropdown/DropDown";
 import { useNavigate } from "react-router-dom";
+import Modal from "../../components/common/modal/Modal";
 
 const CreateTask = () => {
 	const navigate = useNavigate();
+	const [openModal, setOpenModal] = useState(false);
+
+	const openEmployeeModal = () => {
+		setOpenModal(!openModal);
+	};
+
+	const closeModal = () => {
+		setOpenModal(false);
+	};
 
 	const getTomorrowDate = () => {
 		const tomorrow = new Date();
@@ -434,6 +444,8 @@ const CreateTask = () => {
 								placeholder={!selected.department ? "აირჩიეთ დეპარტამენტი" : ""}
 								disabled={!selected.department}
 								value={selected.employee}
+								showEmployeeOption={true}
+								onEmployeeOptions={openEmployeeModal}
 							/>
 						</InputWrapper>
 						<DateInputWrapper>
@@ -454,6 +466,7 @@ const CreateTask = () => {
 					</FormBSide>
 				</CreateFormContainer>
 			</CreateTaskContainer>
+			{openModal && <Modal onClose={closeModal} />}
 		</Container>
 	);
 };

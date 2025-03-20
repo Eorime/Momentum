@@ -142,23 +142,24 @@ const Modal = ({ onClose }) => {
 
 	const handleSubmit = async () => {
 		try {
-			//form data object for file upload
 			const formData = new FormData();
 			formData.append("name", employeeFormData.name);
 			formData.append("surname", employeeFormData.surname);
 			formData.append("department_id", employeeFormData.department);
 
-			// append file if it exists
 			if (employeeFormData.avatar instanceof File) {
 				formData.append("avatar", employeeFormData.avatar);
 			}
 
-			//send data
-			const response = await apiService.createEmployee(formData);
+			await apiService.createEmployee(formData);
 
 			onClose();
+
+			setTimeout(() => {
+				window.location.reload();
+			}, 400);
 		} catch (error) {
-			console.error("error creating employee:", error);
+			console.error("Error creating employee:", error);
 		}
 	};
 
