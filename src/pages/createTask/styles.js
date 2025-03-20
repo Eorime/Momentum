@@ -115,6 +115,7 @@ export const DateInput = styled.input`
 	font-weight: 200;
 	border-radius: 5px;
 	color: #0d0f10;
+	cursor: pointer;
 `;
 
 export const ValidationsWrapper = styled.div`

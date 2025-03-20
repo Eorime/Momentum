@@ -42,6 +42,12 @@ export const EmployeeContainer = styled.div`
 	align-items: center;
 `;
 
+export const ASideWrapper = styled.div`
+	display: flex;
+	gap: 10px;
+	align-items: center;
+`;
+
 export const PriorityWrapper = styled.div`
 	display: flex;
 	align-items: center;

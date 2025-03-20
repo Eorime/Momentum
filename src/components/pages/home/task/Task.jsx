@@ -1,5 +1,6 @@
 import React from "react";
 import {
+	ASideWrapper,
 	CommentCount,
 	CommentIcon,
 	CommentsContainer,
@@ -75,27 +76,30 @@ const Task = ({ task }) => {
 	return (
 		<Container>
 			<FiltersContainer>
-				<PriorityWrapper
-					style={{
-						borderColor: getPriorityStyle(task.priority.id).border,
-						color: getPriorityStyle(task.priority.id).font,
-					}}
-				>
-					<PriorityIcon src={task.priority.icon} />
-					<PriorityLabel>{task.priority.name}</PriorityLabel>
-				</PriorityWrapper>
-				<DepartmentWrapper
-					style={{
-						backgroundColor: getDepartmentStyle(task.department.id)
-							.backgroundColor,
-					}}
-				>
-					<Department>
-						{task.department.name.length > 10
-							? `${task.department.name.substring(0, 10)}...`
-							: task.department.name}
-					</Department>
-				</DepartmentWrapper>
+				<ASideWrapper>
+					<PriorityWrapper
+						style={{
+							borderColor: getPriorityStyle(task.priority.id).border,
+							color: getPriorityStyle(task.priority.id).font,
+						}}
+					>
+						<PriorityIcon src={task.priority.icon} />
+						<PriorityLabel>{task.priority.name}</PriorityLabel>
+					</PriorityWrapper>
+					<DepartmentWrapper
+						style={{
+							backgroundColor: getDepartmentStyle(task.department.id)
+								.backgroundColor,
+						}}
+					>
+						<Department>
+							{task.department.name.length > 10
+								? `${task.department.name.substring(0, 10)}...`
+								: task.department.name}
+						</Department>
+					</DepartmentWrapper>
+				</ASideWrapper>
+
 				<DueDate>{formattedDate}</DueDate>
 			</FiltersContainer>
 			<TextContainer>

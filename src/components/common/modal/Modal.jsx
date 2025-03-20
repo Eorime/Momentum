@@ -45,6 +45,7 @@ const Modal = ({ onClose }) => {
 		surnameMinLength: null,
 		surnameMaxLength: null,
 		surnameCharacters: null,
+		imageSize: null,
 	});
 
 	const hasOnlyGeorgianAndEnglish = (text) => {
@@ -372,6 +373,21 @@ const Modal = ({ onClose }) => {
 								onChange={handleFileChange}
 								style={{ display: "none" }}
 							/>
+							<ValidationsWrapper>
+								<Validation
+									status={
+										imagePreview === null
+											? "default"
+											: employeeFormData.avatar &&
+											  employeeFormData.avatar instanceof File &&
+											  employeeFormData.avatar.size <= 600 * 1024
+											? "valid"
+											: "invalid"
+									}
+								>
+									მაქსიმუმ 600KB
+								</Validation>
+							</ValidationsWrapper>
 						</AvatarInputWrapper>
 					</InputWrapper>
 					<InputWrapper>

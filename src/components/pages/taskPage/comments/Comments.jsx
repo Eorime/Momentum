@@ -31,7 +31,7 @@ const Comments = () => {
 		const fetchComments = async () => {
 			try {
 				const response = await apiService.getCommentsByTaskId(taskId);
-				setComments(response.data || []);
+				setComments(response.data.reverse() || []);
 				console.log(response);
 			} catch (error) {
 				console.log("couldnt fetch comments", error);

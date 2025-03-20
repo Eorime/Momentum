@@ -46,7 +46,10 @@ export const TaskDescription = styled.p`
 	margin-top: 26px;
 `;
 
-export const TaskInfo = styled.div``;
+export const TaskInfo = styled.div`
+	font-family: "Firago";
+	font-weight: 400;
+`;
 
 export const DepartmentContainer = styled.div`
 	display: flex;
