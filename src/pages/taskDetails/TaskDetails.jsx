@@ -71,28 +71,15 @@ const TaskDetails = () => {
 		if (!isoDateString) return "";
 
 		const date = new Date(isoDateString);
-
 		const day = date.getDate();
+		const month = date.getMonth() + 1;
 		const year = date.getFullYear();
 
-		const georgianMonths = [
-			"იან",
-			"თებ",
-			"მარ",
-			"აპრ",
-			"მაი",
-			"ივნ",
-			"ივლ",
-			"აგვ",
-			"სექ",
-			"ოქტ",
-			"ნოე",
-			"დეკ",
-		];
+		const georgianDays = ["კვი", "ორშ", "სამ", "ოთხ", "ხუთ", "პარ", "შაბ"];
 
-		const monthAbbr = georgianMonths[date.getMonth()];
+		const dayAbbr = georgianDays[date.getDay()];
 
-		return `${day} ${monthAbbr}, ${year}`;
+		return `${dayAbbr} - ${day}/${month}/${year}`;
 	};
 
 	useEffect(() => {

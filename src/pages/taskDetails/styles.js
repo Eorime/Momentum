@@ -103,13 +103,14 @@ export const StatusContainer = styled.div`
 
 export const EmployeeContainer = styled.div`
 	display: flex;
-	gap: 70px;
+	gap: 43px;
 	margin-bottom: 24px;
 `;
 
 export const DeadlineContainer = styled.div`
 	display: flex;
-	gap: 70px;
+	gap: 43px;
+	align-items: center;
 `;
 
 export const IconTitleWrapper = styled.div`
