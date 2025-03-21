@@ -69,6 +69,11 @@ export const Input = styled.input`
 	outline: none;
 	box-shadow: none;
 	border: 1px solid #dee2e6;
+	border-color: ${(props) => {
+		if (props.status === "valid") return "#08A508";
+		if (props.status === "invalid") return "#FA4D4D";
+		return "#dee2e6";
+	}};
 	font-size: 14px;
 	font-family: "Firago";
 	font-weight: 200;
@@ -83,6 +88,11 @@ export const TextArea = styled.textarea`
 	outline: none;
 	box-shadow: none;
 	border: 1px solid #dee2e6;
+	border-color: ${(props) => {
+		if (props.status === "valid") return "#08A508";
+		if (props.status === "invalid") return "#FA4D4D";
+		return "#dee2e6";
+	}};
 	font-size: 14px;
 	font-family: "Firago";
 	font-weight: 200;

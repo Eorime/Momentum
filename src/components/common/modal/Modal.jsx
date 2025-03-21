@@ -207,6 +207,13 @@ const Modal = ({ onClose }) => {
 								name="name"
 								value={employeeFormData.name}
 								onChange={handleInputChange}
+								status={
+									validations.nameMinLength === null
+										? "default"
+										: validations.nameMinLength
+										? "valid"
+										: "invalid"
+								}
 							/>
 							<ValidationsWrapper>
 								<Validation
@@ -250,6 +257,13 @@ const Modal = ({ onClose }) => {
 								name="surname"
 								value={employeeFormData.surname}
 								onChange={handleInputChange}
+								status={
+									validations.surnameCharacters === null
+										? "default"
+										: validations.surnameCharacters
+										? "valid"
+										: "invalid"
+								}
 							/>
 							<ValidationsWrapper>
 								<Validation

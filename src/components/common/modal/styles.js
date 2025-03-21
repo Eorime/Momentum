@@ -78,6 +78,11 @@ export const Input = styled.input`
 	outline: none;
 	box-shadow: none;
 	border: 1px solid #ced4da;
+	border-color: ${(props) => {
+		if (props.status === "valid") return "#08A508";
+		if (props.status === "invalid") return "#FA4D4D";
+		return "#ced4da";
+	}};
 	font-size: 14px;
 	font-family: "Firago";
 	font-weight: 200;

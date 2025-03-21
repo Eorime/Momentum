@@ -335,6 +335,13 @@ const CreateTask = () => {
 										JSON.stringify(newFormData)
 									);
 								}}
+								status={
+									validations.nameMinLength === null
+										? "default"
+										: validations.nameMinLength
+										? "valid"
+										: "invalid"
+								}
 							/>
 							<ValidationsWrapper>
 								<Validation
@@ -377,6 +384,13 @@ const CreateTask = () => {
 										JSON.stringify(newFormData)
 									);
 								}}
+								status={
+									validations.descMinWords === null
+										? "default"
+										: validations.descMinWords
+										? "valid"
+										: "invalid"
+								}
 							></TextArea>
 							<ValidationsWrapper>
 								<Validation
